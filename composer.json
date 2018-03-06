@@ -1,0 +1,16 @@
+{
+  "name": "polbrot/polbrot-first-api",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "POlbrot",
+      "email": "polbrot@hemmersbach.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "POlbrot\\": "src/POlbrot"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "polbrot-first-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.hemmersbach.com:POlbrot/polbrot-first-api.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
