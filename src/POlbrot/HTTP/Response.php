@@ -7,8 +7,24 @@ namespace POlbrot\HTTP;
  */
 class Response implements ResponseInterface
 {
-    public $headers = [];
-    public $content;
+    protected $headers = [];
+    protected $content;
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @param $newHeader
+     */
+    public function addHeader($newHeader)
+    {
+        array_push($this->headers, $newHeader);
+    }
 
     /**
      * @return ResponseInterface|void

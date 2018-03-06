@@ -11,6 +11,13 @@ class Request
     public $get;
     public $post;
 
+    /**
+     * Request constructor.
+     *
+     * @param $uri
+     * @param $get
+     * @param $post
+     */
     private function __construct($uri, $get, $post)
     {
         $this->uri = $uri;
@@ -18,7 +25,9 @@ class Request
         $this->post = $post;
     }
 
-
+    /**
+     * @return Request
+     */
     public static function createFromGlobals()
     {
         return new Request($_SERVER['REQUEST_URI'], $_GET, $_POST);

@@ -10,5 +10,3 @@ $app = new Application();
 $req = Request::createFromGlobals();
 $response = $app->handle($req);
 $response->send();
-
-

@@ -9,5 +9,8 @@ namespace POlbrot\HTTP;
  */
 class JSONResponse extends Response
 {
-    public $headers = ['Content-type: application/json'];
+    public function __construct()
+    {
+        $this->addHeader('Content-Type: application/json');
+    }
 }

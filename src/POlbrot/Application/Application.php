@@ -34,7 +34,7 @@ class Application implements ApplicationInterface
                     'password' => '9879a98ba78a9ba',
                 ],
             ];
-            $response->content = json_encode($user);
+            $response->setContent(json_encode($user));
         }
 
         return $response;
