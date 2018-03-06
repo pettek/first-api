@@ -7,9 +7,7 @@ namespace POlbrot\HTTP;
  */
 class Response implements ResponseInterface
 {
-
     public $headers = [];
-
     public $content;
 
     /**
