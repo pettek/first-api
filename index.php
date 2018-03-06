@@ -1,9 +1,10 @@
 <?php
 
+use POlbrot\API;
+
 require_once __DIR__.'/vendor/autoload.php';
 
 header('Content-type: application/json');
 
-$variable = new \POlbrot\API();
-echo($variable->index());
+echo((new API())->index());
 
