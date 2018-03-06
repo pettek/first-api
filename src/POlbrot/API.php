@@ -12,21 +12,21 @@ class API
     /**
      * @return string
      */
-    static public function index()
+    public function index()
     {
         $user = [
             'name' => [
                 'first' => 'Imie',
-                'last' => 'Nazwisko'
+                'last' => 'Nazwisko',
             ],
             'location' => 'Wroclaw',
             'user' => [
                 'username' => [
                     'login' => 'inazwisko99',
-                    'email' => 'inazwisko@gmail.com'
+                    'email' => 'inazwisko@gmail.com',
                 ],
-                'password' => '9879a98ba78a9ba'
-            ]
+                'password' => '9879a98ba78a9ba',
+            ],
         ];
 
         return json_encode($user);
