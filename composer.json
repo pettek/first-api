@@ -10,7 +10,9 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "POlbrot\\": "src/POlbrot"
+      "POlbrot\\": "src/POlbrot",
+      "POlbrot\\HTTP\\": "src/POlbrot/HTTP",
+      "POlbrot\\Application\\": "src/POlbrot/Application"
     }
   }
 }

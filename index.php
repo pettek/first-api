@@ -1,13 +1,14 @@
 <?php
 
-use POlbrot\API;
+use POlbrot\Application\Application;
+use POlbrot\HTTP\Request;
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$api = new API();
+$app = new Application();
 
-if ($_SERVER['REQUEST_URI'] === '/api') {
-    header('Content-type: application/json');
+$req = Request::createFromGlobals();
+$response = $app->handle($req);
+$response->send();
 
-    echo $api->index();
-}
+
