@@ -18,8 +18,6 @@ class Application implements ApplicationInterface
      */
     public function handle(Request $request)
     {
-        $response = new JSONResponse();
-
         if ($request->getUri() === '/api') {
             $user = [
                 'name' => [
@@ -35,7 +33,9 @@ class Application implements ApplicationInterface
                     'password' => '9879a98ba78a9ba',
                 ],
             ];
-            $response->setContent(json_encode($user));
+            $response = new JSONResponse($user);
+        } else {
+            $response = (new Response())->addHeader('Location', '/api');
         }
 
         return $response;

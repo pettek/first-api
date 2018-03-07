@@ -11,6 +11,16 @@ class Response implements ResponseInterface
     protected $content;
 
     /**
+     * Response constructor.
+     *
+     * @param $content
+     */
+    public function __construct($content = '')
+    {
+        $this->content = $content;
+    }
+
+    /**
      * @param mixed $content
      */
     public function setContent($content)
@@ -19,11 +29,24 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @param $newHeader
+     * @param $key
+     * @param $value
      */
-    public function addHeader($newHeader)
+    public function addHeader($key, $value)
     {
-        array_push($this->headers, $newHeader);
+        $this->headers[$key] = $value;
+    }
+
+    public function sendHeaders()
+    {
+        foreach ($this->headers as $key => $value) {
+            header($key.": ".$value);
+        }
+    }
+
+    public function sendContent()
+    {
+        echo $this->content;
     }
 
     /**
@@ -31,10 +54,7 @@ class Response implements ResponseInterface
      */
     public function send()
     {
-        foreach ($this->headers as $header) {
-            header($header);
-        }
-
-        echo $this->content;
+        $this->sendHeaders();
+        $this->sendContent();
     }
 }
