@@ -4,6 +4,7 @@ namespace POlbrot\Application;
 
 use POlbrot\HTTP\Request;
 use POlbrot\HTTP\JSONResponse;
+use POlbrot\HTTP\Response;
 
 /**
  * Interface ApplicationInterface
@@ -13,13 +14,13 @@ class Application implements ApplicationInterface
     /**
      * @param Request $request
      *
-     * @return JSONResponse|Response
+     * @return Response
      */
     public function handle(Request $request)
     {
         $response = new JSONResponse();
 
-        if ($request->uri === '/api') {
+        if ($request::getUri() === '/api') {
             $user = [
                 'name' => [
                     'first' => 'Imie',

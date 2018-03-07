@@ -7,22 +7,14 @@ namespace POlbrot\HTTP;
  */
 class Request
 {
-    public $uri;
-    public $get;
-    public $post;
+    private static $uri;
 
     /**
-     * Request constructor.
-     *
-     * @param $uri
-     * @param $get
-     * @param $post
+     * @return mixed
      */
-    private function __construct($uri, $get, $post)
+    public static function getUri()
     {
-        $this->uri = $uri;
-        $this->get = $get;
-        $this->post = $post;
+        return self::$uri;
     }
 
     /**
@@ -30,6 +22,8 @@ class Request
      */
     public static function createFromGlobals()
     {
-        return new Request($_SERVER['REQUEST_URI'], $_GET, $_POST);
+        self::$uri = $_SERVER['REQUEST_URI'];
+
+        return new self();
     }
 }
