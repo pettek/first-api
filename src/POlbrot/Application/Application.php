@@ -20,7 +20,7 @@ class Application implements ApplicationInterface
     {
         $response = new JSONResponse();
 
-        if ($request::getUri() === '/api') {
+        if ($request->getUri() === '/api') {
             $user = [
                 'name' => [
                     'first' => 'Imie',
