@@ -12,7 +12,8 @@
     "psr-4": {
       "POlbrot\\": "src/POlbrot",
       "POlbrot\\HTTP\\": "src/POlbrot/HTTP",
-      "POlbrot\\Application\\": "src/POlbrot/Application"
+      "POlbrot\\Application\\": "src/POlbrot/Application",
+      "POlbrot\\Controller": "src/POlbrot/Controller"
     }
   },
   "require-dev": {

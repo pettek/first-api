@@ -18,12 +18,14 @@ class Request
     }
 
     /**
-     *
+     * Creates instance of a request and returns it
+     * @return Request
      */
-    public function createFromGlobals()
+    public static function createFromGlobals()
     {
-        $this->uri = $_SERVER['REQUEST_URI'];
+        $instance = new self();
+        $instance->uri = $_SERVER['REQUEST_URI'];
 
-        return $this;
+        return $instance;
     }
 }

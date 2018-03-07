@@ -9,8 +9,7 @@ use POlbrot\HTTP\Request;
 require_once __DIR__.'/vendor/autoload.php';
 
 $app = new Application();
-$req = new Request();
 
-$req->createFromGlobals();
+$req = Request::createFromGlobals();
 $response = $app->handle($req);
 $response->send();
