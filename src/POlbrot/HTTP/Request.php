@@ -7,23 +7,23 @@ namespace POlbrot\HTTP;
  */
 class Request
 {
-    private static $uri;
+    protected $uri;
 
     /**
      * @return mixed
      */
-    public static function getUri()
+    public function getUri()
     {
-        return self::$uri;
+        return $this->uri;
     }
 
     /**
-     * @return Request
+     *
      */
-    public static function createFromGlobals()
+    public function createFromGlobals()
     {
-        self::$uri = $_SERVER['REQUEST_URI'];
+        $this->uri = $_SERVER['REQUEST_URI'];
 
-        return new self();
+        return $this;
     }
 }
