@@ -6,7 +6,6 @@ use POlbrot\Controller\UserController;
 use POlbrot\HTTP\Request;
 use POlbrot\HTTP\Response;
 
-
 /**
  * Interface ApplicationInterface
  */
@@ -17,7 +16,7 @@ class Application implements ApplicationInterface
      *
      * @return Response
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         if ($request->getUri() === '/api') {
             $response = (new UserController())->getAction($request);

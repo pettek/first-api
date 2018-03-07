@@ -14,7 +14,7 @@ class JSONResponse extends Response
      *
      * @param $content
      */
-    public function __construct($content)
+    public function __construct($content = '')
     {
         parent::__construct(json_encode($content));
         $this->addHeader('Content-Type', 'application/json');

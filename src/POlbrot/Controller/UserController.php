@@ -19,7 +19,7 @@ class UserController
      *
      * @return JSONResponse
      */
-    public function getAction(Request $request)
+    public function getAction(Request $request) : JSONResponse
     {
         $user = [
             'name' => [

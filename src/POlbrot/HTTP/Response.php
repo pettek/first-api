@@ -23,7 +23,7 @@ class Response implements ResponseInterface
     /**
      * @param mixed $content
      */
-    public function setContent($content)
+    public function setContent($content): void
     {
         $this->content = $content;
     }
@@ -32,19 +32,19 @@ class Response implements ResponseInterface
      * @param $key
      * @param $value
      */
-    public function addHeader($key, $value)
+    public function addHeader($key, $value): void
     {
         $this->headers[$key] = $value;
     }
 
-    public function sendHeaders()
+    public function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
             header($key.": ".$value);
         }
     }
 
-    public function sendContent()
+    public function sendContent(): void
     {
         echo $this->content;
     }
@@ -52,7 +52,7 @@ class Response implements ResponseInterface
     /**
      * @return ResponseInterface|void
      */
-    public function send()
+    public function send(): void
     {
         $this->sendHeaders();
         $this->sendContent();

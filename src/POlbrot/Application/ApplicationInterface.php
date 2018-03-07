@@ -3,6 +3,7 @@
 namespace POlbrot\Application;
 
 use POlbrot\HTTP\Request;
+use POlbrot\HTTP\Response;
 
 /**
  * Interface ApplicationInterface
@@ -14,5 +15,5 @@ interface ApplicationInterface
      *
      * @return \POlbrot\HTTP\Response
      */
-    public function handle(Request $request);
+    public function handle(Request $request): Response;
 }

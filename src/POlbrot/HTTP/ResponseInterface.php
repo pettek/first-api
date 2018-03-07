@@ -7,8 +7,5 @@ namespace POlbrot\HTTP;
  */
 interface ResponseInterface
 {
-    /**
-     * @return ResponseInterface
-     */
-    public function send();
+    public function send(): void;
 }
