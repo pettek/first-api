@@ -21,20 +21,24 @@ class UserController
      */
     public function getAction(Request $request) : JSONResponse
     {
-        $user = [
-            'name' => [
-                'first' => 'Imie',
-                'last' => 'Nazwisko',
-            ],
-            'location' => 'Wroclaw',
-            'user' => [
-                'username' => [
-                    'login' => 'inazwisko99',
-                    'email' => 'inazwisko@gmail.com',
+
+        // Temporary, so I don't get annoying messages :|
+        if($request) {
+            $user = [
+                'name' => [
+                    'first' => 'Imie',
+                    'last' => 'Nazwisko',
                 ],
-                'password' => '9879a98ba78a9ba',
-            ],
-        ];
+                'location' => 'Wroclaw',
+                'user' => [
+                    'username' => [
+                        'login' => 'inazwisko99',
+                        'email' => 'inazwisko@gmail.com',
+                    ],
+                    'password' => '9879a98ba78a9ba',
+                ],
+            ];
+        }
 
         return new JSONResponse($user);
     }
