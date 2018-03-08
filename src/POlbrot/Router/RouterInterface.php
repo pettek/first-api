@@ -1,6 +1,9 @@
 <?php
 
 namespace POlbrot\Router;
+
+use POlbrot\HTTP\Request;
+
 /**
  * Interface RouterInterface
  */
@@ -13,9 +16,9 @@ interface RouterInterface
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null);
 
     /**
-     * @param string $url
+     * @param Request $request
      *
      * @return RouteInterface|null
      */
-    public function resolve(string $url): ?RouteInterface;
+    public function resolve(Request $request): ?RouteInterface;
 }

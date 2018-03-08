@@ -2,6 +2,8 @@
 
 namespace POlbrot\Router;
 
+use POlbrot\HTTP\Request;
+
 /**
  * Class Router
  *
@@ -26,11 +28,11 @@ class Router implements RouterInterface
     }
 
     /**
-     * @param string $url
+     * @param Request $request
      *
      * @return null|RouteInterface
      */
-    public function resolve(string $url): ?RouteInterface
+    public function resolve(Request $request): ?RouteInterface
     {
         /**
          * @var int                      $level
@@ -38,7 +40,7 @@ class Router implements RouterInterface
          */
         foreach ($this->resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
-                $route = $resolver->resolve($url);
+                $route = $resolver->resolve($request);
 
                 if ($route) {
                     return $route;
