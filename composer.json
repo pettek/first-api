@@ -13,7 +13,8 @@
       "POlbrot\\": "src/POlbrot",
       "POlbrot\\HTTP\\": "src/POlbrot/HTTP",
       "POlbrot\\Application\\": "src/POlbrot/Application",
-      "POlbrot\\Controller": "src/POlbrot/Controller"
+      "POlbrot\\Controller\\": "src/POlbrot/Controller",
+      "POlbrot\\Router\\": "src/POlbrot/Router"
     }
   },
   "require-dev": {

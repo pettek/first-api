@@ -2,9 +2,10 @@
 
 namespace POlbrot\Application;
 
-use POlbrot\Controller\UserController;
 use POlbrot\HTTP\Request;
 use POlbrot\HTTP\Response;
+use POlbrot\Router\CustomRouteResolver;
+use POlbrot\Router\Router;
 
 /**
  * Interface ApplicationInterface
@@ -18,11 +19,16 @@ class Application implements ApplicationInterface
      */
     public function handle(Request $request): Response
     {
-        if ($request->getUri() === '/api') {
-            $response = (new UserController())->getAction($request);
-        } else {
-            $response = new Response('Some text');
-        }
+        $router = new Router();
+        $router->registerResolver(new CustomRouteResolver());
+
+        $route = $router->resolve($request->getUri());
+
+        $class = $route->getControllerClass();
+        $action = $route->getAction();
+
+        $instance = new $class;
+        $response = $instance->{$action}($request);
 
         return $response;
     }
