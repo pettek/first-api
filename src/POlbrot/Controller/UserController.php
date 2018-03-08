@@ -50,12 +50,13 @@ class UserController
      */
     public function findAction(Request $request): JSONResponse
     {
-        $reqArr = explode('/', $request->getUri());
-        $age = end($reqArr);
+        $params = $request->getParams();
+        $age = $params['age'];
+        $name = $params['name'];
 
         $user = [
             'name' => [
-                'first' => 'Imie',
+                'first' => $name,
                 'last' => 'Nazwisko',
             ],
             'location' => 'Wroclaw',

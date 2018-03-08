@@ -7,7 +7,8 @@ namespace POlbrot\Router;
  *
  * @package POlbrot\Router
  */
-class Route implements RouteInterface{
+class Route implements RouteInterface
+{
     private $className;
     private $methodName;
 
@@ -22,6 +23,7 @@ class Route implements RouteInterface{
         $this->className = $className;
         $this->methodName = $methodName;
     }
+
     /**
      * @return string
      */

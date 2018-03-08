@@ -15,37 +15,47 @@ class CustomRouteResolver implements RouteResolverInterface
     private $regexRoutes;
 
     /**
-     * CustomRouteResolver constructor.
+     * Create regexPattern routes from routes
      */
-    public function __construct($relativePath)
+    private function createRegexRoutes()
     {
-        $this->routes = json_decode(
-            file_get_contents(__DIR__ . '\\' . $relativePath),
-            true
-        );
-
-        foreach($this->routes as $key => $value) {
+        foreach ($this->routes as $key => $value) {
+            $key = str_replace('/', '\/', $key);
             $key = str_replace('{', '(?P<', $key);
             $key = str_replace('}', '>.+)', $key);
-            $key = str_replace('/', '\/', $key);
             $key = '/'.$key.'$/';
+
             $this->regexRoutes[$key] = $value;
         }
     }
 
     /**
-     * @param string $url
+     * CustomRouteResolver constructor.
+     *
+     * @param $relativePath
+     */
+    public function __construct($relativePath)
+    {
+        $this->routes = json_decode(
+            file_get_contents(__DIR__.'\\'.'custom_routes.json'),
+            true
+        );
+        $this->createRegexRoutes();
+    }
+
+    /**
+     * @param Request $request
      *
      * @return null|RouteInterface
      */
     public function resolve(Request $request): ?RouteInterface
     {
         $classMethodString = null;
-        foreach($this->regexRoutes as $route => $classMethod) {
+        foreach ($this->regexRoutes as $route => $classMethod) {
             $matches = [];
-            if(preg_match($route, $request->getUri(), $matches) === 1){
+            if (preg_match($route, $request->getUri(), $matches) === 1) {
                 $classMethodString = $classMethod;
-
+                $request->setParams($matches);
                 break;
             }
         }
