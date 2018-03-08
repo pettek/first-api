@@ -14,11 +14,15 @@ class Router implements RouterInterface
     /**
      * @param RouteResolverInterface $routeResolver
      * @param int|null               $priority
+     *
+     * @return Router
      */
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null)
     {
         $priority = intval($priority); // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
+
+        return $this;
     }
 
     /**

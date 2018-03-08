@@ -32,7 +32,7 @@ class Response implements ResponseInterface
      * @param $key
      * @param $value
      */
-    public function addHeader($key, $value): void
+    public function addHeader($key, $value = ''): void
     {
         $this->headers[$key] = $value;
     }
@@ -40,7 +40,11 @@ class Response implements ResponseInterface
     public function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
-            header($key.": ".$value);
+            if(strlen($value) > 0) {
+                header($key.": ".$value);
+            } else {
+                header($key);
+            }
         }
     }
 
