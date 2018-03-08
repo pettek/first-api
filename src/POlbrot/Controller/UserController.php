@@ -42,4 +42,26 @@ class UserController
 
         return new JSONResponse($user);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JSONResponse
+     */
+    public function findAction(Request $request): JSONResponse
+    {
+        $reqArr = explode('/', $request->getUri());
+        $age = end($reqArr);
+
+        $user = [
+            'name' => [
+                'first' => 'Imie',
+                'last' => 'Nazwisko',
+            ],
+            'location' => 'Wroclaw',
+            'age' => $age,
+        ];
+
+        return new JSONResponse($user);
+    }
 }

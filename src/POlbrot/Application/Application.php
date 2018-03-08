@@ -28,7 +28,7 @@ class Application implements ApplicationInterface
             ->registerResolver(new DefaultRouteResolver())
             ->registerResolver(new CustomRouteResolver('custom_routes.json'));
 
-        $route = $router->resolve($request->getUri());
+        $route = $router->resolve($request);
 
         // If route is unresolved $route will contain null value
         if ($route) {
