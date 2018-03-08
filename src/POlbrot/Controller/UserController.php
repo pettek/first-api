@@ -19,11 +19,11 @@ class UserController
      *
      * @return JSONResponse
      */
-    public function getAction(Request $request) : JSONResponse
+    public function getAction(Request $request): JSONResponse
     {
 
         // Temporary, so I don't get annoying messages :|
-        if($request) {
+        if ($request) {
             $user = [
                 'name' => [
                     'first' => 'Imie',
