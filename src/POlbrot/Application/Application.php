@@ -20,7 +20,7 @@ class Application implements ApplicationInterface
     public function handle(Request $request): Response
     {
         $router = new Router();
-        $router->registerResolver(new CustomRouteResolver());
+        $router->registerResolver(new CustomRouteResolver('custom_routes.json'));
 
         $route = $router->resolve($request->getUri());
 

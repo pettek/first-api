@@ -14,10 +14,10 @@ class CustomRouteResolver implements RouteResolverInterface
     /**
      * CustomRouteResolver constructor.
      */
-    public function __construct()
+    public function __construct($relativePath)
     {
         $this->routes = json_decode(
-            file_get_contents(__DIR__.'\custom_routes.json'),
+            file_get_contents(__DIR__ . '\\' . $relativePath),
             true
         );
     }
