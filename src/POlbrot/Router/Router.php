@@ -29,7 +29,7 @@ class Router implements RouterInterface
     public function resolve(string $url): ?RouteInterface
     {
         /**
-         * @var int $level
+         * @var int                      $level
          * @var RouteResolverInterface[] $sameLevelResolvers
          */
         foreach ($this->resolvers as $level => $sameLevelResolvers) {
@@ -41,7 +41,6 @@ class Router implements RouterInterface
                 }
             }
         }
-
 
         return null;
     }

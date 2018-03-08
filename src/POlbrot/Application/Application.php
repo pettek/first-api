@@ -4,6 +4,7 @@ namespace POlbrot\Application;
 
 use POlbrot\HTTP\Request;
 use POlbrot\Router\CustomRouteResolver;
+use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use POlbrot\HTTP\Response;
 
@@ -20,6 +21,7 @@ class Application implements ApplicationInterface
     public function handle(Request $request): Response
     {
         $router = new Router();
+        $router->registerResolver(new DefaultRouteResolver());
         $router->registerResolver(new CustomRouteResolver('custom_routes.json'));
 
         $route = $router->resolve($request->getUri());

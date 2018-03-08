@@ -1,3 +1,4 @@
 {
-  "\/api": "POlbrot\\Controller\\UserController::getAction"
+  "\/api": "POlbrot\\Controller\\UserController::getAction",
+  "\/user-api": "POlbrot\\Controller\\UserController::getAction"
 }
