@@ -2,6 +2,8 @@
 
 namespace POlbrot\Router;
 
+use POlbrot\HTTP\Request;
+
 /**
  * Class CustomRouteResolver
  *
@@ -10,6 +12,7 @@ namespace POlbrot\Router;
 class CustomRouteResolver implements RouteResolverInterface
 {
     private $routes;
+    private $regexRoutes;
 
     /**
      * CustomRouteResolver constructor.
@@ -20,6 +23,14 @@ class CustomRouteResolver implements RouteResolverInterface
             file_get_contents(__DIR__ . '\\' . $relativePath),
             true
         );
+
+        foreach($this->routes as $key => $value) {
+            $key = str_replace('{', '(?P<', $key);
+            $key = str_replace('}', '>.+)', $key);
+            $key = str_replace('/', '\/', $key);
+            $key = '/'.$key.'$/';
+            $this->regexRoutes[$key] = $value;
+        }
     }
 
     /**
@@ -27,9 +38,17 @@ class CustomRouteResolver implements RouteResolverInterface
      *
      * @return null|RouteInterface
      */
-    public function resolve(string $url): ?RouteInterface
+    public function resolve(Request $request): ?RouteInterface
     {
-        $classMethodString = $this->routes[$url] ?? null;
+        $classMethodString = null;
+        foreach($this->regexRoutes as $route => $classMethod) {
+            $matches = [];
+            if(preg_match($route, $request->getUri(), $matches) === 1){
+                $classMethodString = $classMethod;
+
+                break;
+            }
+        }
 
         if ($classMethodString) {
             list($className, $methodName) = explode('::', $classMethodString);
