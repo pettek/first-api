@@ -3,9 +3,9 @@
 namespace POlbrot\Application;
 
 use POlbrot\HTTP\Request;
-use POlbrot\HTTP\Response;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\Router;
+use POlbrot\HTTP\Response;
 
 /**
  * Interface ApplicationInterface
@@ -24,12 +24,17 @@ class Application implements ApplicationInterface
 
         $route = $router->resolve($request->getUri());
 
-        $class = $route->getControllerClass();
-        $action = $route->getAction();
+        if ($route) {
+            $class = $route->getControllerClass();
+            $action = $route->getAction();
 
-        $instance = new $class;
-        $response = $instance->{$action}($request);
+            $instance = new $class;
+            $response = $instance->{$action}($request);
 
-        return $response;
+            return $response;
+        } else {
+            return new Response();
+        }
+
     }
 }

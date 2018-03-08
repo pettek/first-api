@@ -7,7 +7,21 @@ namespace POlbrot\Router;
  *
  * @package POlbrot\Router
  */
-class CustomRouteResolver implements RouteResolverInterface{
+class CustomRouteResolver implements RouteResolverInterface
+{
+    private $routes;
+
+    /**
+     * CustomRouteResolver constructor.
+     */
+    public function __construct()
+    {
+        $this->routes = json_decode(
+            file_get_contents(__DIR__.'\custom_routes.json'),
+            true
+        );
+    }
+
     /**
      * @param string $url
      *
@@ -15,6 +29,14 @@ class CustomRouteResolver implements RouteResolverInterface{
      */
     public function resolve(string $url): ?RouteInterface
     {
-        return new Route('POlbrot\Controller\UserController', 'getAction');
+        $classMethodString = $this->routes[$url] ?? null;
+
+        if ($classMethodString) {
+            list($className, $methodName) = explode('::', $classMethodString);
+
+            return new Route($className, $methodName);
+        }
+
+        return null;
     }
 }

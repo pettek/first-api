@@ -17,7 +17,7 @@ class Router implements RouterInterface
      */
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null)
     {
-        $priority = ($priority === NULL) ? 3 : $priority;
+        $priority = intval($priority); // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
     }
 
@@ -28,6 +28,10 @@ class Router implements RouterInterface
      */
     public function resolve(string $url): ?RouteInterface
     {
+        /**
+         * @var int $level
+         * @var RouteResolverInterface[] $sameLevelResolvers
+         */
         foreach ($this->resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
                 $route = $resolver->resolve($url);
