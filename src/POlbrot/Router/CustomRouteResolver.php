@@ -20,10 +20,11 @@ class CustomRouteResolver implements RouteResolverInterface
     private function createRegexRoutes()
     {
         foreach ($this->routes as $key => $value) {
-            $key = str_replace('/', '\/', $key);
-            $key = str_replace('{', '(?P<', $key);
-            $key = str_replace('}', '>.+)', $key);
-            $key = '/'.$key.'$/';
+            $key = htmlspecialchars($key); // replace some potentially dangerous chars with HTML entities
+            $key = str_replace('/', '\/', $key); // escape every slash
+            $key = str_replace('{', '(?<', $key); // convert { to beginning of named match in regex
+            $key = str_replace('}', '>[^\/]+)', $key); // convert } to end of named match
+            $key = '/'.$key.'\B/'; // end the regex here, nothing after that
 
             $this->regexRoutes[$key] = $value;
         }
