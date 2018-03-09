@@ -14,7 +14,9 @@
       "POlbrot\\HTTP\\": "src/POlbrot/HTTP",
       "POlbrot\\Application\\": "src/POlbrot/Application",
       "POlbrot\\Controller\\": "src/POlbrot/Controller",
-      "POlbrot\\Router\\": "src/POlbrot/Router"
+      "POlbrot\\Router\\": "src/POlbrot/Router",
+      "POlbrot\\Helpers\\": "src/POlbrot/Helpers",
+      "POlbrot\\Config\\": "src/POlbrot/Config"
     }
   },
   "require-dev": {
