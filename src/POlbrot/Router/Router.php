@@ -21,6 +21,7 @@ class Router implements RouterInterface
     {
         $priority = intval($priority); // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
+        ksort($this->resolvers); // keep everything ordered by the key (priority)
 
         return $this;
     }

@@ -41,8 +41,9 @@ class Application implements ApplicationInterface
         $routes = Helpers::JsonFileToArray($this->config::get('custom-routes'));
 
         $router = (new Router())
-            ->registerResolver(new DefaultRouteResolver(), 1)
-            ->registerResolver(new CustomRouteResolver($routes), 2);
+            ->registerResolver(new DefaultRouteResolver(), 5)
+            ->registerResolver(new CustomRouteResolver($routes), 1);
+
 
         $route = $router->resolve($request->getUri());
 
