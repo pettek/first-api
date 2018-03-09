@@ -44,13 +44,14 @@ class DefaultRouteResolver implements RouteResolverInterface
              * ['a', 1, 'b'] = ['a' => 1]
              * If array has an odd number of elements, ignore the last one (every key has to have a value)
              */
-            for ($paramIndex = 0; $paramIndex < (count($rest) - 1); $paramIndex++) {
+            for ($paramIndex = 0; $paramIndex < (count($rest) - 2); $paramIndex++) {
                 $params[$rest[$paramIndex++]] = $rest[$paramIndex]; // There is a tricky ++
             }
 
             if (class_exists($controller) && method_exists($controller, $method)) {
 
                 return new Route($controller, $method, $params);
+
             } else {
 
                 return null;

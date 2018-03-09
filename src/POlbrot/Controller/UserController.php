@@ -4,6 +4,8 @@ namespace POlbrot\Controller;
 
 use POlbrot\HTTP\JSONResponse;
 use POlbrot\HTTP\Request;
+use POlbrot\Model\RandomUserDirector;
+use POlbrot\Model\UserBuilder;
 
 /**
  * Class UserController
@@ -17,32 +19,19 @@ class UserController
      *
      * @param Request $request
      *
-     * @param array   $params
-     *
      * @return JSONResponse
      */
-    public function getAction(Request $request, array $params = []): JSONResponse
+    public function getAction(Request $request): JSONResponse
     {
 
         $users = [];
-        $howManyToGenerate = $params['number'] ?? 1;
+        $howManyToGenerate = $request->params->getValue('number') ?? 1;
 
         for ($i = 0; $i < $howManyToGenerate; $i++) {
-            $user = [
-                'name' => [
-                    'first' => 'Imie',
-                    'last' => 'Nazwisko',
-                ],
-                'location' => 'Wroclaw',
-                'user' => [
-                    'username' => [
-                        'login' => 'inazwisko99',
-                        'email' => 'inazwisko@gmail.com',
-                    ],
-                    'password' => '9879a98ba78a9ba',
-                ],
-            ];
-            array_push($users, $user);
+            $director = new RandomUserDirector(new UserBuilder());
+            $user = $director->get();
+
+            array_push($users, (array) $user);
         }
 
         return new JSONResponse($users);
@@ -51,14 +40,12 @@ class UserController
     /**
      * @param Request $request
      *
-     * @param array   $params
-     *
      * @return JSONResponse
      */
-    public function findAction(Request $request, Array $params = []): JSONResponse
+    public function findAction(Request $request): JSONResponse
     {
-        $age = $params['age'] ?? 'defaultAge';
-        $name = $params['name'] ?? 'defaultName';
+        $age = $request->params->getValue('age') ?? 'defaultAge';
+        $name = $request->params->getValue('name') ?? 'defaultName';
 
         $user = [
             'name' => [
