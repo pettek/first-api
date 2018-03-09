@@ -11,7 +11,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 $app = new Application(
     new Config(
-        ['custom-routes' => __DIR__ . '\src\POlbrot\Config\custom_routes.json']
+        ['custom-routes' => __DIR__.'\src\POlbrot\Config\custom_routes.json']
     )
 );
 

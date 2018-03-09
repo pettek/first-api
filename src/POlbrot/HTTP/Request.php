@@ -9,7 +9,12 @@ class Request
 {
     protected $uri;
     protected $method;
-    protected $params = [];
+    public $params;
+
+//    public function __construct()
+//    {
+//        $this->params = new Parameters();
+//    }
 
     /**
      * @return mixed
