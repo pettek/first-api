@@ -41,8 +41,6 @@ class UserController
                 ],
             ];
         }
-
-        return new JSONResponse($user);
     }
 
     /**

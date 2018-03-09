@@ -12,7 +12,7 @@ class DefaultRouteResolver implements RouteResolverInterface
     /**
      * @param string $uri
      *
-     * @todo Add params
+     * @todo REFACTOR THIS, THIS LOOKS BAD
      * @return null|RouteInterface
      */
     public function resolve(string $uri): ?RouteInterface
@@ -21,9 +21,15 @@ class DefaultRouteResolver implements RouteResolverInterface
         if (count($urlArray) >= 3) {
             $controller = 'POlbrot\\Controller\\'.ucfirst($urlArray[1]."Controller");
             $method = $urlArray[2].'Action';
+            $params = [];
+
+            $howManyParams = intval((count($urlArray) - 3) / 2);
+            for($paramIndex = 0; $paramIndex < $howManyParams; $paramIndex++){
+                $params[$urlArray[3 + 2 * $paramIndex]] = $urlArray[4 + 2 * $paramIndex];
+            }
 
             if (class_exists($controller) && method_exists($controller, $method)) {
-                return new Route($controller, $method, []);
+                return new Route($controller, $method, $params);
             } else {
                 return null;
             }
