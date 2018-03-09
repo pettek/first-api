@@ -24,8 +24,10 @@ class UserController
     public function getAction(Request $request, Array $params = []): JSONResponse
     {
 
-        // Temporary, so I don't get annoying messages :|
-        if ($request) {
+        $users = [];
+        $howManyToGenerate = $params['number'] ?? 1;
+
+        for ($i = 0; $i < $howManyToGenerate; $i++) {
             $user = [
                 'name' => [
                     'first' => 'Imie',
@@ -40,7 +42,10 @@ class UserController
                     'password' => '9879a98ba78a9ba',
                 ],
             ];
+            array_push($users, $user);
         }
+
+        return new JSONResponse($users);
     }
 
     /**
