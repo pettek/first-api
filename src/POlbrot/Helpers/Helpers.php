@@ -16,9 +16,13 @@ class Helpers
      */
     public static function jsonFileToArray($pathToFile): array
     {
-        return json_decode(
-            file_get_contents($pathToFile),
-            true
-        );
+        if ($pathToFile) {
+            return json_decode(
+                file_get_contents($pathToFile),
+                true
+            );
+        }
+
+        return [];
     }
 }

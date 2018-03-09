@@ -18,6 +18,7 @@ class CustomRouteResolver implements RouteResolverInterface
      */
     private function createRegexRoutes()
     {
+        $this->regexRoutes = [];
         foreach ($this->routes as $key => $value) {
             $key = htmlspecialchars($key); // replace some potentially dangerous chars with HTML entities
             $key = str_replace('/', '\/', $key); // escape every slash
@@ -43,7 +44,7 @@ class CustomRouteResolver implements RouteResolverInterface
      * @param array $routes
      * @param array $configData
      */
-    public function __construct(Array $routes, Array $configData = [])
+    public function __construct(array $routes = [], array $configData = [])
     {
         $this->routes = $routes;
         $this->acceptEmptyParams = ($configData['acceptEmptyParams']) ?? false;
