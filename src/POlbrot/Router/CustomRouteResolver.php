@@ -11,6 +11,7 @@ class CustomRouteResolver implements RouteResolverInterface
 {
     private $routes;
     private $regexRoutes;
+    private $acceptEmptyParams = true;
 
     /**
      * Create regexPattern routes from routes
@@ -21,7 +22,15 @@ class CustomRouteResolver implements RouteResolverInterface
             $key = htmlspecialchars($key); // replace some potentially dangerous chars with HTML entities
             $key = str_replace('/', '\/', $key); // escape every slash
             $key = str_replace('{', '(?<', $key); // convert { to beginning of named match in regex
-            $key = str_replace('}', '>[^\/]+)', $key); // convert } to end of named match
+            /*
+             * If acceptEmptyParams === true this -> /some/path/param1//param2/90 will produce param1 = '', param2 = 90
+             * Otherwise it will not match the url
+             */
+            if($this->acceptEmptyParams){
+                $key = str_replace('}', '>[^\/]*)', $key); // convert } to end of named match
+            } else {
+                $key = str_replace('}', '>[^\/]+)', $key); // convert } to end of named match
+            }
             $key = '/'.$key.'\B/'; // end the regex here, nothing after that
 
             $this->regexRoutes[$key] = $value;
@@ -31,14 +40,13 @@ class CustomRouteResolver implements RouteResolverInterface
     /**
      * CustomRouteResolver constructor.
      *
-     * @param $relativePath
+     * @param array $routes
+     * @param array $configData
      */
-    public function __construct($relativePath)
+    public function __construct(Array $routes, Array $configData = [])
     {
-        $this->routes = json_decode(
-            file_get_contents(__DIR__.'\\'.'custom_routes.json'),
-            true
-        );
+        $this->routes = $routes;
+        $this->acceptEmptyParams = ($configData['acceptEmptyParams']) ?? true;
         $this->createRegexRoutes();
     }
 
@@ -50,9 +58,9 @@ class CustomRouteResolver implements RouteResolverInterface
     public function resolve(string $uri): ?RouteInterface
     {
         $classMethodString = null;
-        foreach ($this->regexRoutes as $route => $classMethod) {
+        foreach ($this->regexRoutes as $regexRoute => $classMethod) {
             $matches = [];
-            if (preg_match($route, $uri, $matches) === 1) {
+            if (preg_match($regexRoute, $uri, $matches) === 1) {
                 $classMethodString = $classMethod;
                 break;
             }
