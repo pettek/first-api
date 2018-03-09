@@ -23,7 +23,7 @@ class Application implements ApplicationInterface
      *
      * @param Config|null $config
      */
-    public function __construct(Config $config = null)
+    public function __construct(Config $config)
     {
         $this->config = $config;
     }
@@ -38,7 +38,7 @@ class Application implements ApplicationInterface
      */
     public function handle(Request $request): Response
     {
-        $routes = Helpers::JsonFileToArray($this->config::get('custom-routes'));
+        $routes = Helpers::jsonFileToArray($this->config::get('custom-routes'));
 
         $router = (new Router())
             ->registerResolver(new DefaultRouteResolver(), 5)
@@ -56,14 +56,11 @@ class Application implements ApplicationInterface
             $params = $route->getParams();
 
             $instance = new $class;
-            $response = $instance->{$action}($request, $params);
-
-            return $response;
-        } else {
-            // Provided URI could not be resolved (it may be incorrect, resolvers were not registered etc.)
-
-            return new TeapotResponse();
+            return $instance->{$action}($request, $params);
         }
+        // Provided URI could not be resolved (it may be incorrect, resolvers were not registered etc.)
+        return new TeapotResponse();
+
 
     }
 }
