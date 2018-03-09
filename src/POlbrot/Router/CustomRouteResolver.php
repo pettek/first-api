@@ -11,7 +11,7 @@ class CustomRouteResolver implements RouteResolverInterface
 {
     private $routes;
     private $regexRoutes;
-    private $acceptEmptyParams = true;
+    private $acceptEmptyParams = false;
 
     /**
      * Create regexPattern routes from routes
@@ -46,7 +46,7 @@ class CustomRouteResolver implements RouteResolverInterface
     public function __construct(Array $routes, Array $configData = [])
     {
         $this->routes = $routes;
-        $this->acceptEmptyParams = ($configData['acceptEmptyParams']) ?? true;
+        $this->acceptEmptyParams = ($configData['acceptEmptyParams']) ?? false;
         $this->createRegexRoutes();
     }
 
