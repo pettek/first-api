@@ -56,9 +56,14 @@ class Application implements ApplicationInterface
                 $action = $route->getAction();
                 $params = $route->getParams();
 
+                foreach($params as $key => $value)
+                {
+                    $request->params->setValue($key, $value);
+                }
+
                 $instance = new $class;
 
-                return $instance->{$action}($request, $params);
+                return $instance->{$action}($request);
             }
             // Provided URI could not be resolved (it may be incorrect, resolvers were not registered etc.)
             throw new URLNotMatchedException();

@@ -11,10 +11,10 @@ class Request
     protected $method;
     public $params;
 
-//    public function __construct()
-//    {
-//        $this->params = new Parameters();
-//    }
+    public function __construct()
+    {
+        $this->params = new Parameters();
+    }
 
     /**
      * @return mixed
