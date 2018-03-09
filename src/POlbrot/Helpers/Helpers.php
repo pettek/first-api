@@ -14,7 +14,7 @@ class Helpers
      *
      * @return array
      */
-    public static function JsonFileToArray($pathToFile): array
+    public static function jsonFileToArray($pathToFile): array
     {
         return json_decode(
             file_get_contents($pathToFile),

@@ -19,7 +19,7 @@ class Router implements RouterInterface
      */
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null)
     {
-        $priority = intval($priority); // NULL -> 0
+        $priority = (int) $priority; // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
         ksort($this->resolvers); // keep everything ordered by the key (priority)
 

@@ -21,7 +21,7 @@ class UserController
      *
      * @return JSONResponse
      */
-    public function getAction(Request $request, Array $params = []): JSONResponse
+    public function getAction(Request $request, array $params = []): JSONResponse
     {
 
         $users = [];
