@@ -2,8 +2,6 @@
 
 namespace POlbrot\Router;
 
-use POlbrot\HTTP\Request;
-
 /**
  * Class CustomRouteResolver
  *
@@ -45,18 +43,17 @@ class CustomRouteResolver implements RouteResolverInterface
     }
 
     /**
-     * @param Request $request
+     * @param string $uri
      *
      * @return null|RouteInterface
      */
-    public function resolve(Request $request): ?RouteInterface
+    public function resolve(string $uri): ?RouteInterface
     {
         $classMethodString = null;
         foreach ($this->regexRoutes as $route => $classMethod) {
             $matches = [];
-            if (preg_match($route, $request->getUri(), $matches) === 1) {
+            if (preg_match($route, $uri, $matches) === 1) {
                 $classMethodString = $classMethod;
-                $request->setParams($matches);
                 break;
             }
         }
@@ -64,7 +61,7 @@ class CustomRouteResolver implements RouteResolverInterface
         if ($classMethodString) {
             list($className, $methodName) = explode('::', $classMethodString);
 
-            return new Route($className, $methodName);
+            return new Route($className, $methodName, $matches);
         }
 
         return null;

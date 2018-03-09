@@ -2,9 +2,6 @@
 
 namespace POlbrot\Router;
 
-use POlbrot\HTTP\Request;
-
-
 /**
  * Class DefaultRouteResolver
  *
@@ -13,19 +10,20 @@ use POlbrot\HTTP\Request;
 class DefaultRouteResolver implements RouteResolverInterface
 {
     /**
-     * @param Request $request
+     * @param string $uri
      *
+     * @todo Add params
      * @return null|RouteInterface
      */
-    public function resolve(Request $request): ?RouteInterface
+    public function resolve(string $uri): ?RouteInterface
     {
-        $urlArray = explode('/', $request->getUri());
+        $urlArray = explode('/', $uri);
         if (count($urlArray) >= 3) {
             $controller = 'POlbrot\\Controller\\'.ucfirst($urlArray[1]."Controller");
             $method = $urlArray[2].'Action';
 
             if (class_exists($controller) && method_exists($controller, $method)) {
-                return new Route($controller, $method);
+                return new Route($controller, $method, []);
             } else {
                 return null;
             }

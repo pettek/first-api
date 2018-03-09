@@ -18,11 +18,13 @@ class Route implements RouteInterface
      *
      * @param $controllerClass
      * @param $action
+     * @param $params
      */
-    public function __construct($controllerClass, $action)
+    public function __construct($controllerClass, $action, $params)
     {
         $this->controllerClass = $controllerClass;
         $this->action = $action;
+        $this->params = $params;
     }
 
     /**

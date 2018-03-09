@@ -2,8 +2,6 @@
 
 namespace POlbrot\Router;
 
-use POlbrot\HTTP\Request;
-
 /**
  * Interface RouteResolverInterface
  */
@@ -12,9 +10,9 @@ interface RouteResolverInterface
     /**
      * Resolves url string, returning RouteInterface object
      *
-     * @param Request $request
+     * @param string $url
      *
      * @return RouteInterface|null
      */
-    public function resolve(Request $request): ?RouteInterface;
+    public function resolve(string $url): ?RouteInterface;
 }

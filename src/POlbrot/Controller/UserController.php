@@ -17,9 +17,11 @@ class UserController
      *
      * @param Request $request
      *
+     * @param array   $params
+     *
      * @return JSONResponse
      */
-    public function getAction(Request $request): JSONResponse
+    public function getAction(Request $request, Array $params = []): JSONResponse
     {
 
         // Temporary, so I don't get annoying messages :|
@@ -46,13 +48,14 @@ class UserController
     /**
      * @param Request $request
      *
+     * @param array   $params
+     *
      * @return JSONResponse
      */
-    public function findAction(Request $request): JSONResponse
+    public function findAction(Request $request, Array $params = []): JSONResponse
     {
-        $params = $request->getParams();
-        $age = $params['age'] ?? '';
-        $name = $params['name'] ?? '';
+        $age = $params['age'] ?? 'defaultAge';
+        $name = $params['name'] ?? 'defaultName';
 
         $user = [
             'name' => [

@@ -28,7 +28,7 @@ class Application implements ApplicationInterface
             ->registerResolver(new DefaultRouteResolver(), 1)
             ->registerResolver(new CustomRouteResolver('custom_routes.json'), 2);
 
-        $route = $router->resolve($request);
+        $route = $router->resolve($request->getUri());
 
         // If route is unresolved $route will contain null value
         if ($route) {
@@ -36,9 +36,10 @@ class Application implements ApplicationInterface
 
             $class = $route->getControllerClass();
             $action = $route->getAction();
+            $params = $route->getParams();
 
             $instance = new $class;
-            $response = $instance->{$action}($request);
+            $response = $instance->{$action}($request, $params);
 
             return $response;
         } else {
