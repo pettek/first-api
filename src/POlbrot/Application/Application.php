@@ -25,8 +25,8 @@ class Application implements ApplicationInterface
     public function handle(Request $request): Response
     {
         $router = (new Router())
-            ->registerResolver(new DefaultRouteResolver())
-            ->registerResolver(new CustomRouteResolver('custom_routes.json'));
+            ->registerResolver(new DefaultRouteResolver(), 1)
+            ->registerResolver(new CustomRouteResolver('custom_routes.json'), 2);
 
         $route = $router->resolve($request);
 
