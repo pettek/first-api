@@ -19,4 +19,11 @@ interface RouteInterface
      * @return string
      */
     public function getAction(): string;
+
+    /**
+     * Returns an array of route parameters
+     *
+     * @return array
+     */
+    public function getParams(): array;
 }

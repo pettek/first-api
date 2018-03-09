@@ -9,19 +9,20 @@ namespace POlbrot\Router;
  */
 class Route implements RouteInterface
 {
-    private $className;
-    private $methodName;
+    private $controllerClass;
+    private $action;
+    private $params = [];
 
     /**
      * Route constructor.
      *
-     * @param $className
-     * @param $methodName
+     * @param $controllerClass
+     * @param $action
      */
-    public function __construct($className, $methodName)
+    public function __construct($controllerClass, $action)
     {
-        $this->className = $className;
-        $this->methodName = $methodName;
+        $this->controllerClass = $controllerClass;
+        $this->action = $action;
     }
 
     /**
@@ -29,7 +30,7 @@ class Route implements RouteInterface
      */
     public function getControllerClass(): string
     {
-        return $this->className;
+        return $this->controllerClass;
     }
 
     /**
@@ -37,6 +38,14 @@ class Route implements RouteInterface
      */
     public function getAction(): string
     {
-        return $this->methodName;
+        return $this->action;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams(): array
+    {
+        return $this->params;
     }
 }
