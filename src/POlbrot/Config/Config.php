@@ -12,7 +12,7 @@ class Config {
      *
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         self::$data = $data;
     }
