@@ -76,8 +76,11 @@ class CustomRouteResolver implements RouteResolverInterface
             if(!class_exists($className) || !method_exists($className, $methodName)) {
                 throw new InvalidJSONFileException();
             }
+            $filteredMatches = array_filter($matches, function($key) {
+               return !is_int($key);
+            }, ARRAY_FILTER_USE_KEY);
 
-            return new Route($className, $methodName, $matches);
+            return new Route($className, $methodName, $filteredMatches);
         }
 
         return null;
