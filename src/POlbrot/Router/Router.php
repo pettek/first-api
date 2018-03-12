@@ -2,6 +2,8 @@
 
 namespace POlbrot\Router;
 
+use POlbrot\Exceptions\URLNotMatchedException;
+
 /**
  * Class Router
  *
@@ -30,6 +32,7 @@ class Router implements RouterInterface
      * @param string $uri
      *
      * @return null|RouteInterface
+     * @throws URLNotMatchedException
      */
     public function resolve(string $uri): ?RouteInterface
     {
@@ -55,7 +58,8 @@ class Router implements RouterInterface
             }
         }
 
-        return null;
+        // Provided URI could not be resolved (it may be incorrect, resolvers were not registered etc.)
+        throw new URLNotMatchedException();
     }
 
 }

@@ -15,6 +15,6 @@ $app = new Application(
     )
 );
 
-$req = Request::createFromGlobals();
-$response = $app->handle($req);
+$request = Request::createFromGlobals();
+$response = $app->handle($request);
 $response->send();

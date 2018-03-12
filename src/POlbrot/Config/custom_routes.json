@@ -2,6 +2,5 @@
   "\/api\/": "POlbrot\\Controller\\UserController::findAction",
   "\/user\/get\/{number}\/": "POlbrot\\Controller\\UserController::getAction",
   "\/user\/{number}\/": "POlbrot\\Controller\\UserController::getAction",
-  "\/api\/user\/get\/{number}\/": "POlbrot\\Controller\\UserController::getAction",
-  "\/api\/user\/{number}\/": "POlbrot\\Controller\\UserController::getAction"
+  "\/api\/user\/get\/{number}\/": "POlbrot\\Controller\\UserController::getAction"
 }

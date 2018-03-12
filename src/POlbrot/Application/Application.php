@@ -47,24 +47,17 @@ class Application implements ApplicationInterface
                 ->registerResolver(new CustomRouteResolver($routes), 1);
 
             $route = $router->resolve($request->getUri());
+            // If route is unresolved $router will throw an Exception
 
-            // If route is unresolved $route will contain null value
-            if ($route) {
-                // There is a correct controller and action, use them
+            $instance = $route->getController();
+            $action = $route->getAction();
+            $params = $route->getParams();
 
-                $instance = $route->getController();
-                $action = $route->getAction();
-                $params = $route->getParams();
-
-                foreach($params as $key => $value)
-                {
-                    $request->params->setValue($key, $value);
-                }
-
-                return $instance->{$action}($request);
+            foreach ($params as $key => $value) {
+                $request->params->setValue($key, $value);
             }
-            // Provided URI could not be resolved (it may be incorrect, resolvers were not registered etc.)
-            throw new URLNotMatchedException();
+
+            return $instance->{$action}($request);
 
         } catch (\Exception $e) {
 
