@@ -10,15 +10,7 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "POlbrot\\": "src/POlbrot",
-      "POlbrot\\HTTP\\": "src/POlbrot/HTTP",
-      "POlbrot\\Application\\": "src/POlbrot/Application",
-      "POlbrot\\Controller\\": "src/POlbrot/Controller",
-      "POlbrot\\Router\\": "src/POlbrot/Router",
-      "POlbrot\\Helpers\\": "src/POlbrot/Helpers",
-      "POlbrot\\Config\\": "src/POlbrot/Config",
-      "POlbrot\\Exceptions\\": "src/POlbrot/Exceptions",
-      "POlbrot\\Model\\": "src/POlbrot/Model"
+      "POlbrot\\": "src/POlbrot"
     }
   },
   "require-dev": {
