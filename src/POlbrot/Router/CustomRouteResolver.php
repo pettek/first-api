@@ -2,6 +2,8 @@
 
 namespace POlbrot\Router;
 
+use POlbrot\Exceptions\InvalidJSONFileException;
+
 /**
  * Class CustomRouteResolver
  *
@@ -55,12 +57,14 @@ class CustomRouteResolver implements RouteResolverInterface
      * @param string $uri
      *
      * @return null|RouteInterface
+     * @throws InvalidJSONFileException
      */
     public function resolve(string $uri): ?RouteInterface
     {
         $classMethodString = null;
+        $matches = [];
+
         foreach ($this->regexRoutes as $regexRoute => $classMethod) {
-            $matches = [];
             if (preg_match($regexRoute, $uri, $matches) === 1) {
                 $classMethodString = $classMethod;
                 break;
@@ -69,6 +73,9 @@ class CustomRouteResolver implements RouteResolverInterface
 
         if ($classMethodString) {
             list($className, $methodName) = explode('::', $classMethodString);
+            if(!class_exists($className) || !method_exists($className, $methodName)) {
+                throw new InvalidJSONFileException();
+            }
 
             return new Route($className, $methodName, $matches);
         }
