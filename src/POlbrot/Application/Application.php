@@ -2,7 +2,6 @@
 
 namespace POlbrot\Application;
 
-use POlbrot\Exceptions\URLNotMatchedException;
 use POlbrot\Helpers\Helpers;
 use POlbrot\HTTP\Request;
 use POlbrot\HTTP\Response;
@@ -40,27 +39,33 @@ class Application implements ApplicationInterface
     public function handle(Request $request): Response
     {
         try {
+            // Fetch JSON from application config and resolve routes from them
             $routes = Helpers::jsonFileToArray($this->config::get('custom-routes'));
 
+            // Add some resolvers so the Router would work
             $router = (new Router())
                 ->registerResolver(new DefaultRouteResolver(), 5)
                 ->registerResolver(new CustomRouteResolver($routes), 1);
 
+            // Resolve given URI --> If route is unresolved $router will throw an Exception
             $route = $router->resolve($request->getUri());
-            // If route is unresolved $router will throw an Exception
 
+            // Extract significant data from returned Route
             $instance = $route->getController();
             $action = $route->getAction();
             $params = $route->getParams();
 
+            // Make parameters available for the Controller via Request
             foreach ($params as $key => $value) {
                 $request->params->setValue($key, $value);
             }
 
+            // Get some response from the Controller
             return $instance->{$action}($request);
 
         } catch (\Exception $e) {
 
+            // If anything went wrong in meantime, return an error response
             return new NotFoundResponse($e);
         }
     }
