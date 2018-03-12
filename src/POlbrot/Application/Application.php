@@ -44,8 +44,8 @@ class Application implements ApplicationInterface
 
             // Add some resolvers so the Router would work
             $router = (new Router())
-                ->registerResolver(new DefaultRouteResolver(), 5)
-                ->registerResolver(new CustomRouteResolver($routes), 1);
+                ->registerResolver(new DefaultRouteResolver(), 1)
+                ->registerResolver(new CustomRouteResolver($routes), 2);
 
             // Resolve given URI --> If route is unresolved $router will throw an Exception
             $route = $router->resolve($request->getUri());
