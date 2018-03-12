@@ -10,9 +10,11 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "POlbrot\\": "src/POlbrot",
-      "Tests\\POlbrot\\": "test/POlbrot"
+      "POlbrot\\": "src/POlbrot"
     }
+  },
+  "autoload-dev": {
+    "Tests\\POlbrot\\": "test/POlbrot"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0"
