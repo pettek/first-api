@@ -32,7 +32,7 @@ class CustomRouteResolver implements RouteResolverInterface
             } else {
                 $key = str_replace('}', '>[^\/]+)', $key); // convert } to end of named match
             }
-            $key = '/'.$key.'\B/'; // end the regex here, nothing after that
+            $key = '/^'.$key.'$/'; // end the regex here, nothing after that
 
             $this->regexRoutes[$key] = $value;
         }
