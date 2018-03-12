@@ -1,6 +1,9 @@
 <?php
 
 namespace POlbrot\Router;
+
+use POlbrot\Controller\Controller;
+
 /**
  * Interface RouteInterface
  */
@@ -9,9 +12,9 @@ interface RouteInterface
     /**
      * Returns fully qualified controller name
      *
-     * @return string
+     * @return Controller
      */
-    public function getControllerClass(): string;
+    public function getController(): Controller;
 
     /**
      * Returns action name

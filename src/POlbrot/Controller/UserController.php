@@ -12,7 +12,7 @@ use POlbrot\Model\UserBuilder;
  *
  * @package POlbrot\Controller
  */
-class UserController
+class UserController extends Controller
 {
     /**
      * Returns instance of JSONResponse with some fake user data as content

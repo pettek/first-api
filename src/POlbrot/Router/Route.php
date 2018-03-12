@@ -2,6 +2,8 @@
 
 namespace POlbrot\Router;
 
+use POlbrot\Controller\Controller;
+
 /**
  * Class Route
  *
@@ -30,14 +32,6 @@ class Route implements RouteInterface
     /**
      * @return string
      */
-    public function getControllerClass(): string
-    {
-        return $this->controllerClass;
-    }
-
-    /**
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
@@ -49,5 +43,13 @@ class Route implements RouteInterface
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @return Controller
+     */
+    public function getController(): Controller
+    {
+        return new $this->controllerClass;
     }
 }

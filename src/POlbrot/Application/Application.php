@@ -52,7 +52,7 @@ class Application implements ApplicationInterface
             if ($route) {
                 // There is a correct controller and action, use them
 
-                $class = $route->getControllerClass();
+                $instance = $route->getController();
                 $action = $route->getAction();
                 $params = $route->getParams();
 
@@ -60,8 +60,6 @@ class Application implements ApplicationInterface
                 {
                     $request->params->setValue($key, $value);
                 }
-
-                $instance = new $class;
 
                 return $instance->{$action}($request);
             }
