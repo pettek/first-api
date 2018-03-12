@@ -62,4 +62,12 @@ class Router implements RouterInterface
         throw new URLNotMatchedException();
     }
 
+    /**
+     * @return array
+     */
+    public function getResolvers(): array
+    {
+        return $this->resolvers;
+    }
+
 }

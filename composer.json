@@ -11,7 +11,7 @@
   "autoload": {
     "psr-4": {
       "POlbrot\\": "src/POlbrot",
-      "Tests\\POlbrot\\": "tests/POlbrot"
+      "Tests\\POlbrot\\": "test/POlbrot"
     }
   },
   "require-dev": {
