@@ -31,7 +31,7 @@ class UserController extends Controller
             $director = new RandomUserDirector(new UserBuilder());
             $user = $director->get();
 
-            array_push($users, (array) $user);
+            $users[] = (array) $user;
         }
 
         return new JSONResponse($users);
