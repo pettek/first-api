@@ -5,15 +5,15 @@ namespace POlbrot\Exceptions;
 use Throwable;
 
 /**
- * Class InvalidJSONPathException
+ * Class InvalidJSONFileException
  *
  * @package POlbrot\Exceptions
  */
-class InvalidJSONPathException extends \Exception
+class InvalidJSONFileException extends \Exception
 {
 
     /**
-     * InvalidJSONPathException constructor.
+     * InvalidJSONFileException constructor.
      *
      * @param string         $message
      * @param int            $code
@@ -29,6 +29,6 @@ class InvalidJSONPathException extends \Exception
      */
     public function __toString()
     {
-        return 'InvalidJSONPathException: File path to existing file was not provided';
+        return 'InvalidJSONFileException: File path to valid JSON file was not provided';
     }
 }
