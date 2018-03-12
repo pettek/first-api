@@ -8,6 +8,7 @@
 
 namespace Tests\POlbrot\Router;
 
+use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -21,12 +22,23 @@ class RouterTest extends TestCase
     public function testRegisterResolver()
     {
         $router = new Router();
-        $this->assertObjectHasAttribute('resolvers', $router);
-        $this->assertCount(0, $router->getResolvers());
+        self::assertObjectHasAttribute('resolvers', $router);
+        self::assertCount(0, $router->getResolvers());
+
+        $router->registerResolver(new DefaultRouteResolver(), 1);
+        self::assertCount(1, $router->getResolvers());
+
+        $router->registerResolver(new DefaultRouteResolver(), 1);
+        self::assertCount(1, $router->getResolvers());
+        self::assertCount(2, $router->getResolvers()[1]);
+
+        $router->registerResolver(new DefaultRouteResolver(), 2);
+        self::assertCount(2, $router->getResolvers());
+        self::assertCount(2, $router->getResolvers()[1]);
     }
 
     public function testResolve()
     {
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 }
