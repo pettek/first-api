@@ -2,6 +2,7 @@
 
 namespace POlbrot\Model;
 
+use DateTime;
 use POlbrot\DataProvider\DataProviderInterface;
 use POlbrot\Helpers\Helpers;
 
@@ -16,6 +17,8 @@ class UserBuilder
     private $user;
     private $firstNames;
     private $lastNames;
+    private $passwords;
+    private $locations;
 
     /**
      * @return $this
@@ -58,6 +61,28 @@ class UserBuilder
     }
 
     /**
+     * @param DataProviderInterface $provider
+     * @return $this
+     */
+    public function setPasswords(DataProviderInterface $provider)
+    {
+        $this->passwords = $provider->toArray();
+
+        return $this;
+    }
+
+    /**
+     * @param DataProviderInterface $provider
+     * @return $this
+     */
+    public function setLocations(DataProviderInterface $provider)
+    {
+        $this->locations = $provider->toArray();
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     private function setRandomFirstName()
@@ -86,7 +111,10 @@ class UserBuilder
      */
     private function setUsername()
     {
-        $username = strtolower($this->user->getFirstName()[0] . $this->user->getLastName());
+        $username = Helpers::createRandomUsername(
+            $this->user->getFirstName(),
+            $this->user->getLastName()
+        );
 
         $this->user->setUsername($username);
 
@@ -122,9 +150,9 @@ class UserBuilder
      */
     private function setRandomPassword()
     {
-        $password = Helpers::pickRandomAlphanumeric(6, 12);
+        $password = Helpers::pickRandomAlphanumeric();
 
-        $this->user->setPassword($password);
+        $this->user->setPassword(hash('sha256', $password . $this->user->getSalt()));
 
         return $this;
     }
@@ -134,9 +162,37 @@ class UserBuilder
      */
     private function setRandomSalt()
     {
-        $salt = Helpers::pickRandomAlphanumeric();
+        $salt = Helpers::pickRandomAlphanumeric(22, 22);
 
         $this->user->setSalt($salt);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    private function setRandomLocation()
+    {
+        $location = Helpers::pickOneRandom($this->locations);
+
+        $this->user->setLocation(
+            (new UserLocation())
+                ->setCountry($location['country'])
+                ->setCity($location['city'])
+                ->setStreet($location['street'])
+                ->setZipCode($location['zipCode'])
+        );
+
+        return $this;
+    }
+
+    private function setDateOfBirth()
+    {
+        $daysOld = mt_rand(10 * 365, 60 * 365);
+        $dob = new DateTime('-'.$daysOld.'days');
+
+        $this->user->setDateOfBirth($dob);
 
         return $this;
     }
@@ -151,8 +207,10 @@ class UserBuilder
             ->setUsername()
             ->setEmail()
             ->setRandomGender()
-            ->setRandomPassword()
             ->setRandomSalt()
+            ->setRandomPassword()
+            ->setRandomLocation()
+            ->setDateOfBirth()
             ->build();
     }
 }
