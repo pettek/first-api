@@ -6,8 +6,8 @@
  * Time: 11:00
  */
 
-use POlbrot\Model\UserBuilder;
 use PHPUnit\Framework\TestCase;
+use POlbrot\Model\UserBuilderCreator;
 
 /**
  * Class UserBuilderTest
@@ -15,18 +15,23 @@ use PHPUnit\Framework\TestCase;
 class UserBuilderTest extends TestCase
 {
 
+    /**
+     * @throws \POlbrot\Exceptions\InvalidJSONPathException
+     * @throws \POlbrot\Exceptions\InvalidTextFilePathException
+     */
     public function testGetUser()
     {
-        $builder = new UserBuilder();
+        $builder = UserBuilderCreator::get();
         $user = $builder->getUser();
+
         self::assertInstanceOf(\POlbrot\Model\User::class, $user);
-        self::assertStringMatchesFormat('%S', $user->getFirstName());
-        self::assertStringMatchesFormat('%S', $user->getLastName());
-        self::assertStringMatchesFormat('%S', $user->getUsername());
-        self::assertStringMatchesFormat('%S', $user->getPassword());
-        self::assertStringMatchesFormat('%S', $user->getSalt());
-        self::assertStringMatchesFormat('%S', $user->getEmail());
-        self::assertStringMatchesFormat('%S', $user->getGender());
+        self::assertStringMatchesFormat('%s', $user->getFirstName());
+        self::assertStringMatchesFormat('%s', $user->getLastName());
+        self::assertStringMatchesFormat('%s', $user->getUsername());
+        self::assertStringMatchesFormat('%s', $user->getPassword());
+        self::assertStringMatchesFormat('%s', $user->getSalt());
+        self::assertStringMatchesFormat('%s', $user->getEmail());
+        self::assertStringMatchesFormat('%s', $user->getGender());
         self::assertInstanceOf(\POlbrot\Model\UserLocation::class, $user->getLocation());
         self::assertInstanceOf(DateTime::class, $user->getDateOfBirth());
         self::assertInternalType('array', $user->getTelephones());
