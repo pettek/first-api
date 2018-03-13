@@ -23,6 +23,7 @@ class UserBuilderCreator
         $builder = new UserBuilder();
         $builder->setFirstNames(new JSONDataProvider(__DIR__ . '/../DataProvider/first-names.json'));
         $builder->setLastNames(new TextDataProvider(__DIR__ . '/../DataProvider/last-names.txt'));
+        $builder->setLocations(new JSONDataProvider(__DIR__ . '/../DataProvider/locations.json'));
 
         return $builder;
     }
