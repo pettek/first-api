@@ -152,7 +152,7 @@ class UserBuilder
     {
         $password = Helpers::pickRandomAlphanumeric();
 
-        $this->user->setPassword(hash('sha256', $password . $this->user->getSalt()));
+        $this->user->setPassword(hash('sha512', $password . $this->user->getSalt()));
 
         return $this;
     }
