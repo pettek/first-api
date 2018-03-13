@@ -18,5 +18,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0"
+  },
+  "scripts": {
+    "srv": "php -S 192.168.109.247:8080 --timeout=0"
   }
 }
