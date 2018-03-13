@@ -1,6 +1,7 @@
 <?php
 
 namespace POlbrot\Model;
+
 use \DateTime;
 
 /**
@@ -18,6 +19,14 @@ class User
     private $location = null;
     private $dateOfBirth = null;
     private $telephones = [];
+
+
+    public function __construct()
+    {
+        $this->location = new UserLocation();
+        $this->dateOfBirth = new DateTime();
+        $this->telephones = [];
+    }
 
     /**
      * @return string
