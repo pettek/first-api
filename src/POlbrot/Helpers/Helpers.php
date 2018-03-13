@@ -26,7 +26,7 @@ class Helpers
                 file_get_contents($pathToFile),
                 true
             );
-            if($string === null) throw new InvalidJSONFileException();
+            if ($string === null) throw new InvalidJSONFileException();
             else return $string;
         } else {
             throw new InvalidJSONPathException();
@@ -51,12 +51,41 @@ class Helpers
     {
         $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         $string = '';
-        $stringLength = rand($minLength, $maxLength);
+        $stringLength = mt_rand($minLength, $maxLength);
 
         for ($letterIndex = 0; $letterIndex < $stringLength; $letterIndex++) {
-            $string .= $possibleChars[rand(0, strlen($possibleChars) - 1)];
+            $string .= $possibleChars[mt_rand(0, strlen($possibleChars) - 1)];
         }
 
         return $string;
+    }
+
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @return string
+     */
+    public static function createRandomUsername(string $firstName, string $lastName)
+    {
+        if (mt_rand(0, 1) === 0) {//50% probability
+            $delimiterRand = mt_rand(0, 99);
+
+            if ($delimiterRand < 33) {       //33% probability
+                $delimiter = '.';
+            } elseif ($delimiterRand < 66) { //33% probability
+                $delimiter = '_';
+            } else {                         //remaining 34% probability
+                $delimiter = '';
+            }
+            $username = $firstName . $delimiter . $lastName;
+        } else {                  //50% probability
+            $username = $firstName;
+        }
+
+        if (mt_rand(0, 100) < 46) {//46% probability
+            $username = $username . mt_rand(1, 100);
+        }
+
+        return $username;
     }
 }
