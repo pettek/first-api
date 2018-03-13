@@ -5,7 +5,8 @@ namespace POlbrot\Model;
 /**
  * Class UserLocation
  */
-class UserLocation {
+class UserLocation implements \JsonSerializable
+{
     private $country = '';
     private $city = '';
     private $street = '';
@@ -85,5 +86,22 @@ class UserLocation {
         $this->zipCode = $zipCode;
 
         return $this;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'country' => $this->getCountry(),
+            'city' => $this->getCity(),
+            'zipCode' => $this->getZipCode(),
+            'street' => $this->getStreet(),
+        ];
     }
 }

@@ -7,7 +7,7 @@ use \DateTime;
 /**
  * Class User
  */
-class User
+class User implements \JsonSerializable
 {
     private $firstName = '';
     private $lastName = '';
@@ -189,4 +189,26 @@ class User
     }
 
 
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'gender' => $this->getGender(),
+            'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'salt' => $this->getSalt(),
+            'location' => $this->getLocation(),
+            'dateOfBirth' => $this->getDateOfBirth(),
+            'telephones' => $this->getTelephones()
+        ];
+    }
 }
