@@ -6,10 +6,10 @@ namespace POlbrot\Model;
  * Class UserLocation
  */
 class UserLocation {
-    private $country;
-    private $city;
-    private $street;
-    private $zipCode;
+    private $country = '';
+    private $city = '';
+    private $street = '';
+    private $zipCode = '';
 
     /**
      * @return mixed

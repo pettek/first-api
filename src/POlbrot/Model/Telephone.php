@@ -7,8 +7,8 @@ namespace POlbrot\Model;
  */
 class Telephone
 {
-    private $type;
-    private $number;
+    private $type = '';
+    private $number = '';
 
     /**
      * @return mixed
