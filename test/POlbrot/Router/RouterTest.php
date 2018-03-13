@@ -8,17 +8,20 @@
 
 namespace Tests\POlbrot\Router;
 
+use POlbrot\Exceptions\InvalidJSONFileException;
+use POlbrot\Exceptions\URLNotMatchedException;
+use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class RouterTest
+ * @throws InvalidJSONFileException
  * @package Tests\POlbrot\Router
  */
 class RouterTest extends TestCase
 {
-
     public function testRegisterResolver()
     {
         $router = new Router();
@@ -37,8 +40,25 @@ class RouterTest extends TestCase
         self::assertCount(2, $router->getResolvers()[1]);
     }
 
+    /**
+     * @throws URLNotMatchedException
+     */
     public function testResolve()
     {
-        self::assertTrue(true);
+        $router = new Router();
+        $router->registerResolver(new DefaultRouteResolver(), 1);
+        $router->registerResolver(new CustomRouteResolver([
+            '/user/get/{number}' => 'POlbrot\\Controller\\UserController::getAction'
+        ]), 2);
+
+        $route = $router->resolve('/user/get/3');
+        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
+        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertEquals('getAction', $route->getAction());
+        self::assertCount(1, $route->getParams());
+        self::assertEquals('3', $route->getParams()['number']);
+
+        self::expectException(URLNotMatchedException::class);
+        $route = $router->resolve('/not/existing/route');
     }
 }
