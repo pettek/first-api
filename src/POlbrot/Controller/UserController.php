@@ -6,6 +6,7 @@ use POlbrot\HTTP\JSONResponse;
 use POlbrot\HTTP\Request;
 use POlbrot\Model\RandomUserDirector;
 use POlbrot\Model\UserBuilder;
+use POlbrot\Model\UserBuilderCreator;
 
 /**
  * Class UserController
@@ -20,6 +21,8 @@ class UserController extends Controller
      * @param Request $request
      *
      * @return JSONResponse
+     * @throws \POlbrot\Exceptions\InvalidJSONPathException
+     * @throws \POlbrot\Exceptions\InvalidTextFilePathException
      */
     public function getAction(Request $request): JSONResponse
     {
@@ -27,11 +30,12 @@ class UserController extends Controller
         $users = [];
         $howManyToGenerate = $request->params->getValue('number') ?? 1;
 
-        for ($i = 0; $i < $howManyToGenerate; $i++) {
-            $director = new RandomUserDirector(new UserBuilder());
-            $user = $director->get();
+        $builder = UserBuilderCreator::get();
 
-            $users[] = (array) $user;
+        for ($i = 0; $i < $howManyToGenerate; $i++) {
+            $user = $builder->getUser();
+
+            $users[] = $user;
         }
 
         return new JSONResponse($users);
