@@ -1,0 +1,32 @@
+[
+  {
+    "country": "Poland",
+    "city": "Wroclaw",
+    "street": "Kopernika",
+    "zipCode": "51-555"
+  },
+  {
+    "country": "Germany",
+    "city": "Berlin",
+    "street": "Etwasstrasse",
+    "zipCode": "01012"
+  },
+  {
+    "country": "France",
+    "city": "Paris",
+    "street": "La Vie En Rose",
+    "zipCode": "19328"
+  },
+  {
+    "country": "Poland",
+    "city": "Kraków",
+    "street": "Mikołaja Reja",
+    "zipCode": "31-002"
+  },
+  {
+    "country": "Poland",
+    "city": "Łódź",
+    "street": "Piotrowska",
+    "zipCode": "38-200"
+  }
+]
