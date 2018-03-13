@@ -21,10 +21,13 @@ class UserLocation {
 
     /**
      * @param mixed $country
+     * @return UserLocation
      */
-    public function setCountry($country): void
+    public function setCountry($country): UserLocation
     {
         $this->country = $country;
+
+        return $this;
     }
 
     /**
@@ -37,10 +40,13 @@ class UserLocation {
 
     /**
      * @param mixed $city
+     * @return UserLocation
      */
-    public function setCity($city): void
+    public function setCity($city): UserLocation
     {
         $this->city = $city;
+
+        return $this;
     }
 
     /**
@@ -53,10 +59,13 @@ class UserLocation {
 
     /**
      * @param mixed $street
+     * @return UserLocation
      */
-    public function setStreet($street): void
+    public function setStreet($street): UserLocation
     {
         $this->street = $street;
+
+        return $this;
     }
 
     /**
@@ -69,9 +78,12 @@ class UserLocation {
 
     /**
      * @param mixed $zipCode
+     * @return UserLocation
      */
-    public function setZipCode($zipCode): void
+    public function setZipCode($zipCode): UserLocation
     {
         $this->zipCode = $zipCode;
+
+        return $this;
     }
 }
