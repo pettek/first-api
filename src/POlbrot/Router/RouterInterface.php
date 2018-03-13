@@ -9,7 +9,7 @@ interface RouterInterface
 {
     /**
      * @param RouteResolverInterface $routeResolver
-     * @param int|null               $priority
+     * @param int|null $priority
      */
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null);
 

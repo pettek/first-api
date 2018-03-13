@@ -34,8 +34,8 @@ class DefaultRouteResolver implements RouteResolverInterface
             $rest = array_slice($urlArray, self::PARAMS_OFFSET);
 
             // Decorate the name so they match controller and method name
-            $controller = self::CONTROLLER_PATH.ucfirst($controller.'Controller');
-            $method = $method.'Action';
+            $controller = self::CONTROLLER_PATH . ucfirst($controller . 'Controller');
+            $method = $method . 'Action';
             $params = [];
 
             /*

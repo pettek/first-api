@@ -15,13 +15,13 @@ class Router implements RouterInterface
 
     /**
      * @param RouteResolverInterface $routeResolver
-     * @param int|null               $priority
+     * @param int|null $priority
      *
      * @return Router
      */
     public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null)
     {
-        $priority = (int) $priority; // NULL -> 0
+        $priority = (int)$priority; // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
         ksort($this->resolvers); // keep everything ordered by the key (priority)
 
@@ -37,7 +37,7 @@ class Router implements RouterInterface
     public function resolve(string $uri): ?RouteInterface
     {
         /**
-         * @var int                      $level
+         * @var int $level
          * @var RouteResolverInterface[] $sameLevelResolvers
          */
 

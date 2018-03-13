@@ -29,12 +29,12 @@ class CustomRouteResolver implements RouteResolverInterface
              * If acceptEmptyParams === true this -> /some/path/param1//param2/90 will produce param1 = '', param2 = 90
              * Otherwise it will not match the url
              */
-            if($this->acceptEmptyParams){
+            if ($this->acceptEmptyParams) {
                 $key = str_replace('}', '>[^\/]*)', $key); // convert } to end of named match
             } else {
                 $key = str_replace('}', '>[^\/]+)', $key); // convert } to end of named match
             }
-            $key = '/^'.$key.'$/'; // end the regex here, nothing after that
+            $key = '/^' . $key . '$/'; // end the regex here, nothing after that
 
             $this->regexRoutes[$key] = $value;
         }
@@ -73,11 +73,11 @@ class CustomRouteResolver implements RouteResolverInterface
 
         if ($classMethodString) {
             list($className, $methodName) = explode('::', $classMethodString);
-            if(!class_exists($className) || !method_exists($className, $methodName)) {
+            if (!class_exists($className) || !method_exists($className, $methodName)) {
                 throw new InvalidJSONFileException();
             }
-            $filteredMatches = array_filter($matches, function($key) {
-               return !is_int($key);
+            $filteredMatches = array_filter($matches, function ($key) {
+                return !is_int($key);
             }, ARRAY_FILTER_USE_KEY);
 
             return new Route($className, $methodName, $filteredMatches);

@@ -49,7 +49,7 @@ class TextDataProvider implements DataProviderInterface
             file_get_contents($this->pathToFile)
         );
 
-        if(count($array) === 0) throw new InvalidTextFileException();
+        if (count($array) === 0) throw new InvalidTextFileException();
 
         return $array;
     }

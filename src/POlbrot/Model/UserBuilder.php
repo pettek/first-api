@@ -190,12 +190,13 @@ class UserBuilder
     private function setDateOfBirth()
     {
         $daysOld = mt_rand(10 * 365, 60 * 365);
-        $dob = new DateTime('-'.$daysOld.'days');
+        $dob = new DateTime('-' . $daysOld . 'days');
 
         $this->user->setDateOfBirth($dob);
 
         return $this;
     }
+
     /**
      * @return User
      */

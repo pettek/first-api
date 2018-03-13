@@ -7,7 +7,8 @@ namespace POlbrot\HTTP;
  *
  * @package POlbrot\HTTP
  */
-class Parameters{
+class Parameters
+{
     private $values = [];
 
     /**

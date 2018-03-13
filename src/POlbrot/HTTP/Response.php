@@ -40,8 +40,8 @@ class Response implements ResponseInterface
     public function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
-            if(strlen($value) > 0) {
-                header($key.": ".$value);
+            if (strlen($value) > 0) {
+                header($key . ": " . $value);
             } else {
                 header($key);
             }

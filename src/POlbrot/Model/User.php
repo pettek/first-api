@@ -207,7 +207,7 @@ class User implements \JsonSerializable
             'password' => $this->getPassword(),
             'salt' => $this->getSalt(),
             'location' => $this->getLocation(),
-            'dateOfBirth' => $this->getDateOfBirth(),
+            'dateOfBirth' => $this->getDateOfBirth()->format('Y-m-d'),
             'telephones' => $this->getTelephones()
         ];
     }

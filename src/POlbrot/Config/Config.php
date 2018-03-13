@@ -4,7 +4,8 @@ namespace POlbrot\Config;
 /**
  * Class Config
  */
-class Config {
+class Config
+{
     static private $data;
 
     /**
@@ -22,7 +23,8 @@ class Config {
      *
      * @return mixed|null
      */
-    static function get(string $property){
+    static function get(string $property)
+    {
         return self::$data[$property] ?? null;
     }
 }

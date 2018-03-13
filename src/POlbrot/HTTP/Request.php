@@ -57,7 +57,7 @@ class Request
     {
         $instance = new self();
         $instance->uri =
-            (substr($_SERVER['REQUEST_URI'], -1) === '/') ? $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'].'/';
+            (substr($_SERVER['REQUEST_URI'], -1) === '/') ? $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'] . '/';
         $instance->method = $_SERVER['REQUEST_METHOD'];
 
         return $instance;
