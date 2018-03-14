@@ -82,7 +82,7 @@ class RouterTest extends TestCase
         $router->registerResolver($defaultStub, 1);
         $router->registerResolver($customStub, 2);
 
-        $route = $router->resolve('/user/get/3/');
+        $route = $router->resolve('/user/get/3');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
