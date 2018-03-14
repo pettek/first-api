@@ -76,7 +76,7 @@ class Helpers
      * @return string
      * @throws \Exception
      */
-    public static function createRandomUsername(string $firstName, string $lastName)
+    public static function createRandomUsername(string $firstName, string $lastName): string
     {
         if (random_int(0, 9) < 9) {//90% probability
             $delimiterRand = random_int(0, 99);

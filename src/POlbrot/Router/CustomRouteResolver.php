@@ -13,7 +13,7 @@ class CustomRouteResolver implements RouteResolverInterface
 {
     private $routes;
     private $regexRoutes;
-    private $acceptEmptyParams = false;
+    private $acceptEmptyParams;
 
     /**
      * Create regexPattern routes from routes
