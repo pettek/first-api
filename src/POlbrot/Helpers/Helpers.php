@@ -45,11 +45,14 @@ class Helpers
     /**
      * @param int $minLength
      * @param int $maxLength
+     * @param bool $onlyNumeric
      * @return string
      */
-    public static function pickRandomAlphanumeric(int $minLength = 6, int $maxLength = 30)
+    public static function pickRandomAlphanumeric(int $minLength = 6, int $maxLength = 30, $onlyNumeric = false)
     {
-        $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        if($onlyNumeric) $possibleChars = '0123456789';
+        else $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
         $string = '';
         $stringLength = mt_rand($minLength, $maxLength);
 
@@ -67,7 +70,7 @@ class Helpers
      */
     public static function createRandomUsername(string $firstName, string $lastName)
     {
-        if (mt_rand(0, 1) === 0) {//50% probability
+        if (mt_rand(0, 9) < 9) {//90% probability
             $delimiterRand = mt_rand(0, 99);
 
             if ($delimiterRand < 33) {       //33% probability
@@ -78,7 +81,7 @@ class Helpers
                 $delimiter = '';
             }
             $username = $firstName . $delimiter . $lastName;
-        } else {                  //50% probability
+        } else {                  //10% probability
             $username = $firstName;
         }
 
