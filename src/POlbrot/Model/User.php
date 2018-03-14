@@ -16,8 +16,8 @@ class User implements \JsonSerializable
     private $salt = '';
     private $email = '';
     private $gender = '';
-    private $location = null;
-    private $dateOfBirth = null;
+    private $location;
+    private $dateOfBirth;
     private $telephones = [];
 
 
@@ -25,7 +25,6 @@ class User implements \JsonSerializable
     {
         $this->location = new UserLocation();
         $this->dateOfBirth = new DateTime();
-        $this->telephones = [];
     }
 
     /**
@@ -207,7 +206,7 @@ class User implements \JsonSerializable
             'password' => $this->getPassword(),
             'salt' => $this->getSalt(),
             'location' => $this->getLocation(),
-            'dateOfBirth' => $this->getDateOfBirth()->format('Y-m-d'),
+            'dateOfBirth' => $this->getDateOfBirth() ? $this->getDateOfBirth()->format('Y-m-d') : '',
             'telephones' => $this->getTelephones()
         ];
     }

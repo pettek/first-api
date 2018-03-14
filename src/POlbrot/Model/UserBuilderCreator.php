@@ -18,7 +18,7 @@ class UserBuilderCreator
      * @throws InvalidJSONPathException
      * @throws InvalidTextFilePathException
      */
-    public static function get()
+    public static function get(): UserBuilder
     {
         $builder = new UserBuilder();
         $builder->setFirstNames(new JSONDataProvider(__DIR__ . '/../DataProvider/first-names.json'));

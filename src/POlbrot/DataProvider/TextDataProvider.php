@@ -29,7 +29,9 @@ class TextDataProvider implements DataProviderInterface
      */
     public function __construct($pathToFile, $delimiter = PHP_EOL)
     {
-        if ($pathToFile === '') throw new InvalidTextFilePathException();
+        if ($pathToFile === '') {
+            throw new InvalidTextFilePathException();
+        }
 
         $this->pathToFile = $pathToFile;
         $this->delimiter = $delimiter;
@@ -42,14 +44,18 @@ class TextDataProvider implements DataProviderInterface
      */
     public function toArray(): array
     {
-        if (!file_exists($this->pathToFile)) throw new InvalidTextFilePathException();
+        if (!file_exists($this->pathToFile)) {
+            throw new InvalidTextFilePathException();
+        }
 
         $array = explode(
             $this->delimiter,
             file_get_contents($this->pathToFile)
         );
 
-        if (count($array) === 0) throw new InvalidTextFileException();
+        if (\count($array) === 0) {
+            throw new InvalidTextFileException();
+        }
 
         return $array;
     }

@@ -23,7 +23,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function init()
+    private function init(): self
     {
         $this->user = new User();
 
@@ -33,7 +33,7 @@ class UserBuilder
     /**
      * @return User
      */
-    private function build()
+    private function build(): User
     {
         return $this->user;
     }
@@ -42,7 +42,7 @@ class UserBuilder
      * @param DataProviderInterface $provider
      * @return UserBuilder
      */
-    public function setFirstNames(DataProviderInterface $provider)
+    public function setFirstNames(DataProviderInterface $provider): UserBuilder
     {
         $this->firstNames = $provider->toArray();
 
@@ -53,7 +53,7 @@ class UserBuilder
      * @param DataProviderInterface $provider
      * @return $this
      */
-    public function setLastNames(DataProviderInterface $provider)
+    public function setLastNames(DataProviderInterface $provider): self
     {
         $this->lastNames = $provider->toArray();
 
@@ -64,7 +64,7 @@ class UserBuilder
      * @param DataProviderInterface $provider
      * @return $this
      */
-    public function setPasswords(DataProviderInterface $provider)
+    public function setPasswords(DataProviderInterface $provider): self
     {
         $this->passwords = $provider->toArray();
 
@@ -75,7 +75,7 @@ class UserBuilder
      * @param DataProviderInterface $provider
      * @return $this
      */
-    public function setLocations(DataProviderInterface $provider)
+    public function setLocations(DataProviderInterface $provider): self
     {
         $this->locations = $provider->toArray();
 
@@ -85,7 +85,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function setRandomFirstName()
+    private function setRandomFirstName(): self
     {
         $firstName = Helpers::pickOneRandom($this->firstNames);
 
@@ -97,7 +97,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function setRandomLastName()
+    private function setRandomLastName(): self
     {
         $lastName = Helpers::pickOneRandom($this->lastNames);
 
@@ -108,8 +108,9 @@ class UserBuilder
 
     /**
      * @return $this
+     * @throws \Exception
      */
-    private function setUsername()
+    private function setUsername(): self
     {
         $username = Helpers::createRandomUsername(
             $this->user->getFirstName(),
@@ -124,7 +125,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function setEmail()
+    private function setEmail(): self
     {
         $email = $this->user->getUsername() . '@fmail.com';
 
@@ -136,7 +137,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function setRandomGender()
+    private function setRandomGender(): self
     {
         $gender = Helpers::pickOneRandom(['male', 'female']);
 
@@ -147,8 +148,9 @@ class UserBuilder
 
     /**
      * @return $this
+     * @throws \Exception
      */
-    private function setRandomPassword()
+    private function setRandomPassword(): self
     {
         $password = Helpers::pickRandomAlphanumeric();
 
@@ -159,8 +161,9 @@ class UserBuilder
 
     /**
      * @return $this
+     * @throws \Exception
      */
-    private function setRandomSalt()
+    private function setRandomSalt(): self
     {
         $salt = Helpers::pickRandomAlphanumeric(22, 22);
 
@@ -172,7 +175,7 @@ class UserBuilder
     /**
      * @return $this
      */
-    private function setRandomLocation()
+    private function setRandomLocation(): self
     {
         $location = Helpers::pickOneRandom($this->locations);
 
@@ -189,10 +192,11 @@ class UserBuilder
 
     /**
      * @return $this
+     * @throws \Exception
      */
-    private function setDateOfBirth()
+    private function setDateOfBirth(): self
     {
-        $daysOld = mt_rand(10 * 365, 60 * 365);
+        $daysOld = random_int(10 * 365, 60 * 365);
         $dob = new DateTime('-' . $daysOld . 'days');
 
         $this->user->setDateOfBirth($dob);
@@ -200,7 +204,11 @@ class UserBuilder
         return $this;
     }
 
-    private function setTelephones()
+    /**
+     * @return $this
+     * @throws \Exception
+     */
+    private function setTelephones(): self
     {
         $private = (new Telephone())
             ->setType('private')
@@ -217,8 +225,9 @@ class UserBuilder
 
     /**
      * @return User
+     * @throws \Exception
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->init()
             ->setRandomFirstName()

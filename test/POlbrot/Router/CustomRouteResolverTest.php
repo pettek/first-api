@@ -11,6 +11,7 @@ namespace Tests\POlbrot\Router;
 use POlbrot\Exceptions\InvalidJSONFileException;
 use POlbrot\Router\CustomRouteResolver;
 use PHPUnit\Framework\TestCase;
+use POlbrot\Router\Route;
 
 /**
  * Class CustomRouteResolverTest
@@ -21,7 +22,7 @@ class CustomRouteResolverTest extends TestCase
     /**
      * @throws InvalidJSONFileException
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         $resolver = new CustomRouteResolver([
             '/api/' => 'POlbrot\\Controller\\UserController::getAction',
@@ -29,8 +30,7 @@ class CustomRouteResolverTest extends TestCase
         ]);
 
         $route = $resolver->resolve('/api/');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(0, $route->getParams());
 
@@ -38,8 +38,7 @@ class CustomRouteResolverTest extends TestCase
         self::assertEquals(null, $route);
 
         $route = $resolver->resolve('/api/users/2');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertArrayHasKey('count', $route->getParams());
         self::assertEquals('2', $route->getParams()['count']);
@@ -51,8 +50,7 @@ class CustomRouteResolverTest extends TestCase
         ], ['acceptEmptyParams' => true]);
 
         $route = $resolver->resolve('/api/4//');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertArrayHasKey('count', $route->getParams());
         self::assertArrayHasKey('name', $route->getParams());
@@ -60,7 +58,8 @@ class CustomRouteResolverTest extends TestCase
         self::assertEquals('', $route->getParams()['name']);
         self::assertCount(2, $route->getParams());
 
-        self::expectException(InvalidJSONFileException::class);
+        $this->expectException(InvalidJSONFileException::class);
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $route = $resolver->resolve('/api/users/get/3/');
     }
 }

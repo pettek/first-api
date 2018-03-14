@@ -14,6 +14,8 @@ use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use PHPUnit\Framework\TestCase;
+use POlbrot\Controller\UserController;
+use POlbrot\Router\Route;
 
 /**
  * Class RouterTest
@@ -22,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RouterTest extends TestCase
 {
-    public function testRegisterResolver()
+    public function testRegisterResolver(): void
     {
         $router = new Router();
         self::assertObjectHasAttribute('resolvers', $router);
@@ -43,22 +45,23 @@ class RouterTest extends TestCase
     /**
      * @throws URLNotMatchedException
      */
-    public function testResolve()
+    public function testResolve(): void
     {
         $router = new Router();
         $router->registerResolver(new DefaultRouteResolver(), 1);
         $router->registerResolver(new CustomRouteResolver([
-            '/user/get/{number}' => 'POlbrot\\Controller\\UserController::getAction'
+            '/user/get/{number}/' => 'POlbrot\\Controller\\UserController::getAction'
         ]), 2);
 
-        $route = $router->resolve('/user/get/3');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        $route = $router->resolve('/user/get/3/');
+        self::assertInstanceOf(Route::class, $route);
+        self::assertInstanceOf(UserController::class, $route->getController());
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
         self::assertEquals('3', $route->getParams()['number']);
 
-        self::expectException(URLNotMatchedException::class);
+        $this->expectException(URLNotMatchedException::class);
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $route = $router->resolve('/not/existing/route');
     }
 }

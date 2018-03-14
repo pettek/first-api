@@ -19,7 +19,9 @@ class JSONDataProvider implements DataProviderInterface
      */
     public function __construct($pathToFile = '')
     {
-        if ($pathToFile === '') throw new InvalidJSONPathException();
+        if ($pathToFile === '') {
+            throw new InvalidJSONPathException();
+        }
 
         $this->pathToFile = $pathToFile;
     }
@@ -31,14 +33,18 @@ class JSONDataProvider implements DataProviderInterface
      */
     public function toArray(): array
     {
-        if (!file_exists($this->pathToFile)) throw new InvalidJSONPathException();
+        if (!file_exists($this->pathToFile)) {
+            throw new InvalidJSONPathException();
+        }
 
         $array = json_decode(
             file_get_contents($this->pathToFile),
             true
         );
 
-        if ($array === null) throw new InvalidJSONFileException();
+        if ($array === null) {
+            throw new InvalidJSONFileException();
+        }
 
         return $array;
     }

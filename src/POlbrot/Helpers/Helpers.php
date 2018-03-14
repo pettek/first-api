@@ -26,11 +26,14 @@ class Helpers
                 file_get_contents($pathToFile),
                 true
             );
-            if ($string === null) throw new InvalidJSONFileException();
-            else return $string;
-        } else {
-            throw new InvalidJSONPathException();
+            if ($string === null) {
+                throw new InvalidJSONFileException();
+            }
+
+            return $string;
         }
+
+        throw new InvalidJSONPathException();
     }
 
     /**
@@ -47,17 +50,21 @@ class Helpers
      * @param int $maxLength
      * @param bool $onlyNumeric
      * @return string
+     * @throws \Exception
      */
-    public static function pickRandomAlphanumeric(int $minLength = 6, int $maxLength = 30, $onlyNumeric = false)
+    public static function pickRandomAlphanumeric(int $minLength = 6, int $maxLength = 30, $onlyNumeric = false): string
     {
-        if($onlyNumeric) $possibleChars = '0123456789';
-        else $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        if ($onlyNumeric) {
+            $possibleChars = '0123456789';
+        } else {
+            $possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        }
 
         $string = '';
-        $stringLength = mt_rand($minLength, $maxLength);
+        $stringLength = random_int($minLength, $maxLength);
 
         for ($letterIndex = 0; $letterIndex < $stringLength; $letterIndex++) {
-            $string .= $possibleChars[mt_rand(0, strlen($possibleChars) - 1)];
+            $string .= $possibleChars[random_int(0, \strlen($possibleChars) - 1)];
         }
 
         return $string;
@@ -67,11 +74,12 @@ class Helpers
      * @param string $firstName
      * @param string $lastName
      * @return string
+     * @throws \Exception
      */
     public static function createRandomUsername(string $firstName, string $lastName)
     {
-        if (mt_rand(0, 9) < 9) {//90% probability
-            $delimiterRand = mt_rand(0, 99);
+        if (random_int(0, 9) < 9) {//90% probability
+            $delimiterRand = random_int(0, 99);
 
             if ($delimiterRand < 33) {       //33% probability
                 $delimiter = '.';
@@ -85,8 +93,8 @@ class Helpers
             $username = $firstName;
         }
 
-        if (mt_rand(0, 100) < 46) {//46% probability
-            $username = $username . mt_rand(1, 100);
+        if (random_int(0, 100) < 46) {//46% probability
+            $username .= random_int(1, 100);
         }
 
         return $username;

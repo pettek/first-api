@@ -19,7 +19,7 @@ class Router implements RouterInterface
      *
      * @return Router
      */
-    public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null)
+    public function registerResolver(RouteResolverInterface $routeResolver, int $priority = null): Router
     {
         $priority = (int)$priority; // NULL -> 0
         $this->resolvers[$priority][] = $routeResolver;
@@ -50,7 +50,9 @@ class Router implements RouterInterface
 
         foreach ($resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
-                if($uri[strlen($uri) - 1] !== '/') $uri .= '/';
+                if($uri[\strlen($uri) - 1] !== '/') {
+                    $uri .= '/';
+                }
 
                 $route = $resolver->resolve($uri);
 

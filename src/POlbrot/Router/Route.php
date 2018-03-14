@@ -13,7 +13,7 @@ class Route implements RouteInterface
 {
     private $controllerClass;
     private $action;
-    private $params = [];
+    private $params;
 
     /**
      * Route constructor.

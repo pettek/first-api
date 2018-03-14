@@ -10,6 +10,8 @@ namespace Tests\POlbrot\Router;
 
 use POlbrot\Router\DefaultRouteResolver;
 use PHPUnit\Framework\TestCase;
+use POlbrot\Router\Route;
+use POlbrot\Controller\UserController;
 
 /**
  * Class DefaultRouteResolverTest
@@ -18,12 +20,12 @@ use PHPUnit\Framework\TestCase;
 class DefaultRouteResolverTest extends TestCase
 {
 
-    public function testResolve()
+    public function testResolve(): void
     {
         $resolver = new DefaultRouteResolver();
         $route = $resolver->resolve('/user/get');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertInstanceOf(Route::class, $route);
+        self::assertInstanceOf(UserController::class, $route->getController());
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(0, $route->getParams());
 
@@ -34,8 +36,8 @@ class DefaultRouteResolverTest extends TestCase
         self::assertEquals(null, $route);
 
         $route = $resolver->resolve('/user/get/param/value/');
-        self::assertInstanceOf('POlbrot\\Router\\Route', $route);
-        self::assertInstanceOf('POlbrot\\Controller\\UserController', $route->getController());
+        self::assertInstanceOf(Route::class, $route);
+        self::assertInstanceOf(UserController::class, $route->getController());
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
         self::assertEquals('value', $route->getParams()['param']);

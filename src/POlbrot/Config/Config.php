@@ -23,7 +23,7 @@ class Config
      *
      * @return mixed|null
      */
-    static function get(string $property)
+    public static function get(string $property)
     {
         return self::$data[$property] ?? null;
     }

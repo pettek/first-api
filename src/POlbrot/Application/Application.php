@@ -5,6 +5,7 @@ namespace POlbrot\Application;
 use POlbrot\Helpers\Helpers;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
+use POlbrot\Router\Route;
 use POlbrot\Router\Router;
 use POlbrot\Config\Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,7 @@ class Application implements ApplicationInterface
      * @param Request $request
      *
      * @return Response
+     * @throws \InvalidArgumentException
      */
     public function handle(Request $request): Response
     {
@@ -50,17 +52,21 @@ class Application implements ApplicationInterface
             $route = $router->resolve($request->server->get('REQUEST_URI'));
 
             // Extract significant data from returned Route
-            $instance = $route->getController();
-            $action = $route->getAction();
-            $params = $route->getParams();
+            if ($route instanceof Route) {
+                $instance = $route->getController();
+                $action = $route->getAction();
+                $params = $route->getParams();
 
-            // Make parameters available for the Controller via Request
-            foreach ($params as $key => $value) {
-                $request->attributes->set($key, $value);
+                // Make parameters available for the Controller via Request
+                foreach ($params as $key => $value) {
+                    $request->attributes->set($key, $value);
+                }
+
+                // Get some response from the Controller
+                return $instance->{$action}($request);
             }
 
-            // Get some response from the Controller
-            return $instance->{$action}($request);
+            return new Response('', Response::HTTP_NOT_FOUND);
 
         } catch (\Exception $e) {
 

@@ -21,6 +21,7 @@ class UserController extends Controller
      * @return JsonResponse
      * @throws \POlbrot\Exceptions\InvalidJSONPathException
      * @throws \POlbrot\Exceptions\InvalidTextFilePathException
+     * @throws \Exception
      */
     public function getAction(Request $request): JsonResponse
     {
