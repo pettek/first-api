@@ -12,6 +12,8 @@ use POlbrot\Exceptions\InvalidJSONFileException;
 use POlbrot\Router\CustomRouteResolver;
 use PHPUnit\Framework\TestCase;
 use POlbrot\Router\Route;
+use POlbrot\Router\RouteInterface;
+use POlbrot\Router\RouteResolverInterface;
 
 /**
  * Class CustomRouteResolverTest
@@ -19,36 +21,79 @@ use POlbrot\Router\Route;
  */
 class CustomRouteResolverTest extends TestCase
 {
-    /**
-     * @throws InvalidJSONFileException
-     */
-    public function testResolve(): void
+    protected $correctResolver;
+    protected $flawedResolver;
+
+    protected function setUp()
     {
-        $resolver = new CustomRouteResolver([
+        $this->correctResolver = new CustomRouteResolver([
             '/api/' => 'POlbrot\\Controller\\UserController::getAction',
             '/api/users/{count}' => 'POlbrot\\Controller\\UserController::getAction',
         ]);
 
+        $this->flawedResolver = new CustomRouteResolver([
+            '/api/{count}/{name}/' => 'POlbrot\\Controller\\UserController::getAction',
+            '/api/users/get/{count}/' => 'POlbrot\\Controller\\UserController::fetchAction'
+        ], ['acceptEmptyParams' => true]);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnRouteOnMatch(): void
+    {
+        /**
+         * @var RouteInterface $route
+         * @var RouteResolverInterface $resolver
+         */
+        $resolver = $this->correctResolver;
         $route = $resolver->resolve('/api/');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(0, $route->getParams());
+    }
 
+    /**
+     * @test
+     */
+    public function shouldReturnNullOnNoMatch(): void
+    {
+        /**
+         * @var RouteResolverInterface $resolver
+         */
+        $resolver = $this->correctResolver;
         $route = $resolver->resolve('/api/2');
         self::assertEquals(null, $route);
+    }
 
+    /**
+     * @test
+     */
+    public function shouldReturnRouteWithParamsOnRegexMatch(): void
+    {
+        /**
+         * @var RouteInterface $route
+         * @var RouteResolverInterface $resolver
+         */
+        $resolver = $this->correctResolver;
         $route = $resolver->resolve('/api/users/2');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertArrayHasKey('count', $route->getParams());
         self::assertEquals('2', $route->getParams()['count']);
         self::assertCount(1, $route->getParams());
+    }
 
-        $resolver = new CustomRouteResolver([
-            '/api/{count}/{name}/' => 'POlbrot\\Controller\\UserController::getAction',
-            '/api/users/get/{count}/' => 'POlbrot\\Controller\\UserController::fetchAction'
-        ], ['acceptEmptyParams' => true]);
-
+    /**
+     * @test
+     */
+    public function shouldReturnRouteWithEmptyParamIfSpecified(): void
+    {
+        /**
+         * @var RouteInterface $route
+         * @var RouteResolverInterface $resolver
+         */
+        $resolver = $this->flawedResolver;
         $route = $resolver->resolve('/api/4//');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
@@ -57,9 +102,20 @@ class CustomRouteResolverTest extends TestCase
         self::assertEquals('4', $route->getParams()['count']);
         self::assertEquals('', $route->getParams()['name']);
         self::assertCount(2, $route->getParams());
+    }
 
+    /**
+     * @test
+     */
+    public function shouldThrowExceptionIfIncorrectMethod(): void
+    {
+        /**
+         * @var RouteResolverInterface $resolver
+         */
         $this->expectException(InvalidJSONFileException::class);
+        $resolver = $this->flawedResolver;
         /** @noinspection PhpUnusedLocalVariableInspection */
         $route = $resolver->resolve('/api/users/get/3/');
     }
+
 }
