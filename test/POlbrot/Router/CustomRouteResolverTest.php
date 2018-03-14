@@ -12,7 +12,6 @@ use POlbrot\Exceptions\InvalidJSONFileException;
 use POlbrot\Router\CustomRouteResolver;
 use PHPUnit\Framework\TestCase;
 use POlbrot\Router\Route;
-use POlbrot\Router\RouteInterface;
 use POlbrot\Router\RouteResolverInterface;
 
 /**
@@ -21,7 +20,10 @@ use POlbrot\Router\RouteResolverInterface;
  */
 class CustomRouteResolverTest extends TestCase
 {
+    /** @var RouteResolverInterface $correctResolver */
     protected $correctResolver;
+
+    /** @var RouteResolverInterface $flawedResolver */
     protected $flawedResolver;
 
     protected function setUp()
@@ -42,12 +44,7 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnRouteOnMatch(): void
     {
-        /**
-         * @var RouteInterface $route
-         * @var RouteResolverInterface $resolver
-         */
-        $resolver = $this->correctResolver;
-        $route = $resolver->resolve('/api/');
+        $route = $this->correctResolver->resolve('/api/');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(0, $route->getParams());
@@ -58,9 +55,6 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnNullOnNoMatch(): void
     {
-        /**
-         * @var RouteResolverInterface $resolver
-         */
         $resolver = $this->correctResolver;
         $route = $resolver->resolve('/api/2');
         self::assertEquals(null, $route);
@@ -71,10 +65,6 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnRouteWithParamsOnRegexMatch(): void
     {
-        /**
-         * @var RouteInterface $route
-         * @var RouteResolverInterface $resolver
-         */
         $resolver = $this->correctResolver;
         $route = $resolver->resolve('/api/users/2');
         self::assertInstanceOf(Route::class, $route);
@@ -89,10 +79,6 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnRouteWithEmptyParamIfSpecified(): void
     {
-        /**
-         * @var RouteInterface $route
-         * @var RouteResolverInterface $resolver
-         */
         $resolver = $this->flawedResolver;
         $route = $resolver->resolve('/api/4//');
         self::assertInstanceOf(Route::class, $route);
@@ -109,13 +95,9 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldThrowExceptionIfIncorrectMethod(): void
     {
-        /**
-         * @var RouteResolverInterface $resolver
-         */
         $this->expectException(InvalidJSONFileException::class);
         $resolver = $this->flawedResolver;
-        /** @noinspection PhpUnusedLocalVariableInspection */
-        $route = $resolver->resolve('/api/users/get/3/');
+        $resolver->resolve('/api/users/get/3/');
     }
 
 }
