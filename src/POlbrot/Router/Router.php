@@ -14,6 +14,18 @@ class Router implements RouterInterface
     private $resolvers = [];
 
     /**
+     * @param $uri
+     * @return string
+     */
+    private static function addSlashToURI($uri): string
+    {
+        if($uri[\strlen($uri) - 1] !== '/') {
+            $uri .= '/';
+        }
+        return $uri;
+    }
+
+    /**
      * @param RouteResolverInterface $routeResolver
      * @param int|null $priority
      *
@@ -50,10 +62,8 @@ class Router implements RouterInterface
 
         foreach ($resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
-                if($uri[\strlen($uri) - 1] !== '/') {
-                    $uri .= '/';
-                }
 
+                $uri = self::addSlashToURI($uri);
                 $route = $resolver->resolve($uri);
 
                 if ($route) {
