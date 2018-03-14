@@ -50,6 +50,8 @@ class Router implements RouterInterface
 
         foreach ($resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
+                if($uri[strlen($uri) - 1] !== '/') $uri .= '/';
+
                 $route = $resolver->resolve($uri);
 
                 if ($route) {

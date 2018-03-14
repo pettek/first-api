@@ -2,11 +2,9 @@
 
 namespace POlbrot\Controller;
 
-use POlbrot\HTTP\JSONResponse;
-use POlbrot\HTTP\Request;
-use POlbrot\Model\RandomUserDirector;
-use POlbrot\Model\UserBuilder;
 use POlbrot\Model\UserBuilderCreator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UserController
@@ -20,15 +18,15 @@ class UserController extends Controller
      *
      * @param Request $request
      *
-     * @return JSONResponse
+     * @return JsonResponse
      * @throws \POlbrot\Exceptions\InvalidJSONPathException
      * @throws \POlbrot\Exceptions\InvalidTextFilePathException
      */
-    public function getAction(Request $request): JSONResponse
+    public function getAction(Request $request): JsonResponse
     {
 
         $users = [];
-        $howManyToGenerate = $request->params->getValue('number') ?? 1;
+        $howManyToGenerate = $request->attributes->get('number') ?? 1;
 
         $builder = UserBuilderCreator::get();
 
@@ -38,18 +36,18 @@ class UserController extends Controller
             $users[] = $user;
         }
 
-        return new JSONResponse($users);
+        return new JsonResponse($users);
     }
 
     /**
      * @param Request $request
      *
-     * @return JSONResponse
+     * @return JsonResponse
      */
-    public function findAction(Request $request): JSONResponse
+    public function findAction(Request $request): JsonResponse
     {
-        $age = $request->params->getValue('age') ?? 'defaultAge';
-        $name = $request->params->getValue('name') ?? 'defaultName';
+        $age = $request->attributes->get('age') ?? 'defaultAge';
+        $name = $request->attributes->get('name') ?? 'defaultName';
 
         $user = [
             'name' => [
@@ -60,6 +58,6 @@ class UserController extends Controller
             'age' => $age,
         ];
 
-        return new JSONResponse($user);
+        return new JsonResponse($user);
     }
 }

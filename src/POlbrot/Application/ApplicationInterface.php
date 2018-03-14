@@ -2,8 +2,8 @@
 
 namespace POlbrot\Application;
 
-use POlbrot\HTTP\Request;
-use POlbrot\HTTP\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Interface ApplicationInterface
@@ -11,9 +11,9 @@ use POlbrot\HTTP\Response;
 interface ApplicationInterface
 {
     /**
-     * @param \POlbrot\HTTP\Request $request
+     * @param Request $request
      *
-     * @return \POlbrot\HTTP\Response
+     * @return Response
      */
     public function handle(Request $request): Response;
 }

@@ -3,13 +3,12 @@
 namespace POlbrot\Application;
 
 use POlbrot\Helpers\Helpers;
-use POlbrot\HTTP\Request;
-use POlbrot\HTTP\Response;
-use POlbrot\HTTP\NotFoundResponse;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use POlbrot\Config\Config;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface ApplicationInterface
@@ -48,7 +47,7 @@ class Application implements ApplicationInterface
                 ->registerResolver(new CustomRouteResolver($routes), 2);
 
             // Resolve given URI --> If route is unresolved $router will throw an Exception
-            $route = $router->resolve($request->getUri());
+            $route = $router->resolve($request->server->get('REQUEST_URI'));
 
             // Extract significant data from returned Route
             $instance = $route->getController();
@@ -57,7 +56,7 @@ class Application implements ApplicationInterface
 
             // Make parameters available for the Controller via Request
             foreach ($params as $key => $value) {
-                $request->params->setValue($key, $value);
+                $request->attributes->set($key, $value);
             }
 
             // Get some response from the Controller
@@ -66,7 +65,7 @@ class Application implements ApplicationInterface
         } catch (\Exception $e) {
 
             // If anything went wrong in meantime, return an error response
-            return new NotFoundResponse($e);
+            return new Response($e, Response::HTTP_NOT_FOUND);
         }
     }
 }
