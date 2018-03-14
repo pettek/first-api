@@ -14,7 +14,6 @@ use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use PHPUnit\Framework\TestCase;
-use POlbrot\Controller\UserController;
 use POlbrot\Router\Route;
 
 /**
@@ -55,7 +54,6 @@ class RouterTest extends TestCase
 
         $route = $router->resolve('/user/get/3/');
         self::assertInstanceOf(Route::class, $route);
-        self::assertInstanceOf(UserController::class, $route->getController());
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
         self::assertEquals('3', $route->getParams()['number']);
