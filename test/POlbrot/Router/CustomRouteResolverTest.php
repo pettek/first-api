@@ -55,8 +55,7 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnNullOnNoMatch(): void
     {
-        $resolver = $this->correctResolver;
-        $route = $resolver->resolve('/api/2');
+        $route = $this->correctResolver->resolve('/api/2');
         self::assertEquals(null, $route);
     }
 
@@ -65,8 +64,7 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnRouteWithParamsOnRegexMatch(): void
     {
-        $resolver = $this->correctResolver;
-        $route = $resolver->resolve('/api/users/2');
+        $route = $this->correctResolver->resolve('/api/users/2');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertArrayHasKey('count', $route->getParams());
@@ -79,8 +77,7 @@ class CustomRouteResolverTest extends TestCase
      */
     public function shouldReturnRouteWithEmptyParamIfSpecified(): void
     {
-        $resolver = $this->flawedResolver;
-        $route = $resolver->resolve('/api/4//');
+        $route = $this->flawedResolver->resolve('/api/4//');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertArrayHasKey('count', $route->getParams());
@@ -96,8 +93,7 @@ class CustomRouteResolverTest extends TestCase
     public function shouldThrowExceptionIfIncorrectMethod(): void
     {
         $this->expectException(InvalidJSONFileException::class);
-        $resolver = $this->flawedResolver;
-        $resolver->resolve('/api/users/get/3/');
+        $this->flawedResolver->resolve('/api/users/get/3/');
     }
 
 }
