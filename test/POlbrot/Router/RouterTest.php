@@ -11,6 +11,7 @@ namespace Tests\POlbrot\Router;
 use PHPUnit\Framework\MockObject\MockObject;
 use POlbrot\Controller\UserController;
 use POlbrot\Exceptions\InvalidJSONFileException;
+use POlbrot\Exceptions\URLNotMatchedException;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
@@ -86,5 +87,24 @@ class RouterTest extends TestCase
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
         self::assertEquals('3', $route->getParams()['number']);
+    }
+
+    /**
+ * @test
+ * @throws \ReflectionException
+ */
+    public function shouldReturnNullIfCannotResolve(): void
+    {
+        /** @var RouterInterface $router */
+        $router = $this->router;
+
+        /** @var CustomRouteResolver|MockObject $customStub */
+        $customStub = $this->createMock(DefaultRouteResolver::class);
+        $customStub->method('resolve')->willReturn(
+            new Route(UserController::class, 'getAction', ['number' => '3'])
+        );
+
+        $this->expectException(URLNotMatchedException::class);
+        $router->resolve('/any/url/possible');
     }
 }
