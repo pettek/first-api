@@ -11,6 +11,7 @@ namespace Tests\POlbrot\Router;
 use POlbrot\Router\DefaultRouteResolver;
 use PHPUnit\Framework\TestCase;
 use POlbrot\Router\Route;
+use POlbrot\Router\RouteResolverInterface;
 
 /**
  * Class DefaultRouteResolverTest
@@ -19,21 +20,49 @@ use POlbrot\Router\Route;
 class DefaultRouteResolverTest extends TestCase
 {
 
-    public function testResolve(): void
+    /** @var RouteResolverInterface $resolver */
+    protected $resolver;
+
+    protected function setUp()
     {
-        $resolver = new DefaultRouteResolver();
-        $route = $resolver->resolve('/user/get');
+        $this->resolver = new DefaultRouteResolver();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnRouteWithoutParamsOnMatch(): void
+    {
+        $route = $this->resolver->resolve('/user/get');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(0, $route->getParams());
+    }
 
-        $route = $resolver->resolve('/user/create');
+    /**
+     * @test
+     */
+    public function shouldReturnNullOnIncorrectMethod(): void
+    {
+        $route = $this->resolver->resolve('/user/create');
         self::assertEquals(null, $route);
+    }
 
-        $route = $resolver->resolve('/');
+    /**
+     * @test
+     */
+    public function shouldReturnNullOnRootURI(): void
+    {
+        $route = $this->resolver->resolve('/');
         self::assertEquals(null, $route);
+    }
 
-        $route = $resolver->resolve('/user/get/param/value/');
+    /**
+     * @test
+     */
+    public function shouldReturnRouteWithParamsOnMatch(): void
+    {
+        $route = $this->resolver->resolve('/user/get/param/value/');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
