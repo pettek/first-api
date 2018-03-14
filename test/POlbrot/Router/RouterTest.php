@@ -8,13 +8,15 @@
 
 namespace Tests\POlbrot\Router;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use POlbrot\Controller\UserController;
 use POlbrot\Exceptions\InvalidJSONFileException;
-use POlbrot\Exceptions\URLNotMatchedException;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
 use POlbrot\Router\Router;
 use PHPUnit\Framework\TestCase;
 use POlbrot\Router\Route;
+use POlbrot\Router\RouterInterface;
 
 /**
  * Class RouterTest
@@ -23,9 +25,23 @@ use POlbrot\Router\Route;
  */
 class RouterTest extends TestCase
 {
-    public function testRegisterResolver(): void
+    protected $router;
+
+    protected function setUp()
     {
-        $router = new Router();
+        $this->router = new Router();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAddResolverNoMatterPriority(): void
+    {
+        /**
+         * @var RouterInterface|Router $router
+         */
+        $router = $this->router;
+
         self::assertObjectHasAttribute('resolvers', $router);
         self::assertCount(0, $router->getResolvers());
 
@@ -42,24 +58,33 @@ class RouterTest extends TestCase
     }
 
     /**
-     * @throws URLNotMatchedException
+     * @test
+     * @throws \ReflectionException
      */
-    public function testResolve(): void
+    public function shouldTakePriorityIntoAccount(): void
     {
-        $router = new Router();
-        $router->registerResolver(new DefaultRouteResolver(), 1);
-        $router->registerResolver(new CustomRouteResolver([
-            '/user/get/{number}/' => 'POlbrot\\Controller\\UserController::getAction'
-        ]), 2);
+        /** @var RouterInterface $router */
+        $router = $this->router;
+
+        /** @var DefaultRouteResolver|MockObject $defaultStub */
+        $defaultStub = $this->createMock(DefaultRouteResolver::class);
+        $defaultStub->method('resolve')->willReturn(
+            new Route(UserController::class, 'getAction', [])
+        );
+
+        /** @var CustomRouteResolver|MockObject $customStub */
+        $customStub = $this->createMock(DefaultRouteResolver::class);
+        $customStub->method('resolve')->willReturn(
+            new Route(UserController::class, 'getAction', ['number' => '3'])
+        );
+
+        $router->registerResolver($defaultStub, 1);
+        $router->registerResolver($customStub, 2);
 
         $route = $router->resolve('/user/get/3/');
         self::assertInstanceOf(Route::class, $route);
         self::assertEquals('getAction', $route->getAction());
         self::assertCount(1, $route->getParams());
         self::assertEquals('3', $route->getParams()['number']);
-
-        $this->expectException(URLNotMatchedException::class);
-        /** @noinspection PhpUnusedLocalVariableInspection */
-        $route = $router->resolve('/not/existing/route');
     }
 }

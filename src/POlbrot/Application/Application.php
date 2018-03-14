@@ -63,15 +63,28 @@ class Application implements ApplicationInterface
                 }
 
                 // Get some response from the Controller
-                return $instance->{$action}($request);
+                $response = $instance->{$action}($request);
+            } else {
+
+                $response = new Response('', Response::HTTP_NOT_FOUND);
+
             }
-
-            return new Response('', Response::HTTP_NOT_FOUND);
-
         } catch (\Exception $e) {
 
             // If anything went wrong in meantime, return an error response
-            return new Response($e, Response::HTTP_NOT_FOUND);
+            $response = new Response($e, Response::HTTP_NOT_FOUND);
         }
+        return self::onBeforeSend($response);
+
+    }
+
+    /**
+     * @param Response $response
+     * @return Response
+     */
+    private static function onBeforeSend(Response $response): Response
+    {
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 }
