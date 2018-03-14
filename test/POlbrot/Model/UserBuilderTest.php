@@ -9,9 +9,12 @@
 namespace Tests\POlbrot\Model;
 
 use DateTime;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use POlbrot\DataProvider\DataProviderInterface;
+use POlbrot\DataProvider\JSONDataProvider;
 use POlbrot\Model\User;
-use POlbrot\Model\UserBuilderCreator;
+use POlbrot\Model\UserBuilder;
 use POlbrot\Model\UserLocation;
 
 /**
@@ -21,16 +24,52 @@ class UserBuilderTest extends TestCase
 {
 
     /**
-     * @throws \POlbrot\Exceptions\InvalidJSONPathException
-     * @throws \POlbrot\Exceptions\InvalidTextFilePathException
+     * @test
      * @throws \Exception
      */
-    public function testGetUser()
+    public function shouldCreateUser(): User
     {
-        $builder = UserBuilderCreator::get();
+        /** @var DataProviderInterface|MockObject $firstNameProvider */
+        $firstNameProvider = $this->createMock(JSONDataProvider::class);
+        $firstNameProvider->method('toArray')->willReturn(['Name']);
+
+        /** @var DataProviderInterface|MockObject $lastNameProvider */
+        $lastNameProvider = $this->createMock(JSONDataProvider::class);
+        $lastNameProvider->method('toArray')->willReturn(['LastName']);
+
+        /** @var DataProviderInterface|MockObject $locationProvider */
+        $locationProvider = $this->createMock(JSONDataProvider::class);
+        $locationProvider
+            ->method('toArray')
+            ->willReturn([
+                ['country' => 'Poland',
+                'city' => 'Wroclaw',
+                'street' => 'Wyscigowa',
+                'zipCode' => '51-000']
+            ]);
+
+
+        $builder = new UserBuilder();
+        $builder->setFirstNames($firstNameProvider);
+        $builder->setLastNames($lastNameProvider);
+        $builder->setLocations($locationProvider);
+
         $user = $builder->getUser();
 
         self::assertInstanceOf(User::class, $user);
+
+        return $user;
+    }
+
+    /**
+     * @test
+     * @depends shouldCreateUser
+     * @param $user
+     */
+    public function shouldCreateNonEmptyUserFields($user): void
+    {
+        /** @var User $user */
+
         self::assertStringMatchesFormat('%s', $user->getFirstName());
         self::assertStringMatchesFormat('%s', $user->getLastName());
         self::assertStringMatchesFormat('%s', $user->getUsername());
