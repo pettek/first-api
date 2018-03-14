@@ -187,12 +187,30 @@ class UserBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     private function setDateOfBirth()
     {
         $daysOld = mt_rand(10 * 365, 60 * 365);
         $dob = new DateTime('-' . $daysOld . 'days');
 
         $this->user->setDateOfBirth($dob);
+
+        return $this;
+    }
+
+    private function setTelephones()
+    {
+        $private = (new Telephone())
+            ->setType('private')
+            ->setNumber(Helpers::pickRandomAlphanumeric(8,12, true));
+        $work = (new Telephone())
+            ->setType('work')
+            ->setNumber(Helpers::pickRandomAlphanumeric(8,12, true));
+
+        $this->user->addTelephone($private);
+        $this->user->addTelephone($work);
 
         return $this;
     }
@@ -212,6 +230,7 @@ class UserBuilder
             ->setRandomPassword()
             ->setRandomLocation()
             ->setDateOfBirth()
+            ->setTelephones()
             ->build();
     }
 }
