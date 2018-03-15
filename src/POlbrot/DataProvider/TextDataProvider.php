@@ -18,7 +18,10 @@ use POlbrot\Exceptions\InvalidTextFilePathException;
  */
 class TextDataProvider implements DataProviderInterface
 {
+    /** @var string */
     private $pathToFile;
+
+    /** @var string */
     private $delimiter;
 
     /**

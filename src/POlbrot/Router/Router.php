@@ -11,6 +11,7 @@ use POlbrot\Exceptions\URLNotMatchedException;
  */
 class Router implements RouterInterface
 {
+    /** @var array */
     private $resolvers = [];
 
     /**

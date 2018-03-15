@@ -11,8 +11,13 @@ use POlbrot\Controller\Controller;
  */
 class Route implements RouteInterface
 {
+    /** @var string */
     private $controllerClass;
+
+    /** @var string */
     private $action;
+
+    /** @var array */
     private $params;
 
     /**
@@ -22,7 +27,7 @@ class Route implements RouteInterface
      * @param $action
      * @param $params
      */
-    public function __construct($controllerClass, $action, $params)
+    public function __construct(string $controllerClass, string $action, array $params)
     {
         $this->controllerClass = $controllerClass;
         $this->action = $action;

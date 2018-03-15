@@ -10,6 +10,7 @@ use POlbrot\Exceptions\InvalidJSONPathException;
  */
 class JSONDataProvider implements DataProviderInterface
 {
+    /** @var string */
     private $pathToFile;
 
     /**

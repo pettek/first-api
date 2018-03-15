@@ -6,6 +6,7 @@ namespace POlbrot\Config;
  */
 class Config
 {
+    /** @var array */
     static private $data;
 
     /**

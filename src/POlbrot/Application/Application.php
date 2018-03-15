@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Application implements ApplicationInterface
 {
+    /** @var null|Config */
     private $config;
 
     /**

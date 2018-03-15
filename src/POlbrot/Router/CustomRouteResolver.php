@@ -11,8 +11,13 @@ use POlbrot\Exceptions\InvalidJSONFileException;
  */
 class CustomRouteResolver implements RouteResolverInterface
 {
+    /** @var array */
     private $routes;
+
+    /** @var array */
     private $regexRoutes;
+
+    /** @var bool */
     private $acceptEmptyParams;
 
     /**
@@ -50,7 +55,9 @@ class CustomRouteResolver implements RouteResolverInterface
     public function __construct(array $routes = [], array $configData = [])
     {
         $this->routes = $routes;
-        $this->acceptEmptyParams = $configData['acceptEmptyParams'] ?? false;
+
+        // cast to boolean to clean up PHP Doc
+        $this->acceptEmptyParams = (bool) ($configData['acceptEmptyParams'] ?? false);
         $this->createRegexRoutes();
     }
 
