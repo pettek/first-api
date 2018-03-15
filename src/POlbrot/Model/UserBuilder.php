@@ -17,12 +17,11 @@ class UserBuilder
     private $user;
 
     /*
-     * Properties: $firstNames, $lastNames, $passwords, $locations contain some random data in an array from to choose
+     * Properties: $firstNames, $lastNames, $locations contain some random data in an array from to choose
      * randomly from
      */
     private $firstNames;
     private $lastNames;
-    private $passwords;
     private $locations;
 
     /**
@@ -61,17 +60,6 @@ class UserBuilder
     public function setLastNames(DataProviderInterface $provider): self
     {
         $this->lastNames = $provider->toArray();
-
-        return $this;
-    }
-
-    /**
-     * @param DataProviderInterface $provider
-     * @return $this
-     */
-    public function setPasswords(DataProviderInterface $provider): self
-    {
-        $this->passwords = $provider->toArray();
 
         return $this;
     }
