@@ -2,14 +2,14 @@
 
 namespace POlbrot\Config;
 /**
- * Class Config
+ * Class Config encapsulates all config data required for the correct functionality of the application
  */
 class Config
 {
     static private $data;
 
     /**
-     * Config constructor.
+     * Config constructor. If nothing is provided initialize $data property as an empty array
      *
      * @param array $data
      */
@@ -19,6 +19,8 @@ class Config
     }
 
     /**
+     * Return a config data that is stored under this key. If data is not specified under this key return null
+     *
      * @param string $property
      *
      * @return mixed|null
