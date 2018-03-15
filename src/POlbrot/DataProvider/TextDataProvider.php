@@ -22,12 +22,15 @@ class TextDataProvider implements DataProviderInterface
     private $delimiter;
 
     /**
-     * TextDataProvider constructor.
-     * @param $pathToFile
+     * Set $pathToFile property according to what is provided by the constructor's parameter
+     * If nothing provided, throw an InvalidTextFilePathException
+     * Delimiter might be specified as a second constructor's parameter, but has some default value
+     *
+     * @param string $pathToFile
      * @param string $delimiter
      * @throws InvalidTextFilePathException
      */
-    public function __construct($pathToFile, $delimiter = PHP_EOL)
+    public function __construct($pathToFile = '', $delimiter = PHP_EOL)
     {
         if ($pathToFile === '') {
             throw new InvalidTextFilePathException();
@@ -38,6 +41,10 @@ class TextDataProvider implements DataProviderInterface
     }
 
     /**
+     * Returns an array based on contents of a file in $pathToFile property
+     * If file does not exists, throw an InvalidTextFilePathException
+     * If the file exists but cannot be exploded for some reason, throw an InvalidTextFileException
+     *
      * @return array
      * @throws InvalidTextFilePathException
      * @throws InvalidTextFileException

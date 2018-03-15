@@ -13,7 +13,9 @@ class JSONDataProvider implements DataProviderInterface
     private $pathToFile;
 
     /**
-     * JSONDataProvider constructor.
+     * Set $pathToFile property according to what is provided by the constructor's parameter
+     * If nothing provided, throw an InvalidJSONPathException
+     *
      * @param string $pathToFile
      * @throws InvalidJSONPathException
      */
@@ -27,7 +29,12 @@ class JSONDataProvider implements DataProviderInterface
     }
 
     /**
+     * Returns an array based on contents of a file in $pathToFile property
+     * If file does not exists, throw an InvalidJSONPathException
+     * If the file exists but does not comply to JSON format, throw an InvalidJSONFileException
+     *
      * @return array
+     *
      * @throws InvalidJSONFileException
      * @throws InvalidJSONPathException
      */
