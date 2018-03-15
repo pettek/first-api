@@ -8,9 +8,9 @@
 
 namespace Tests\POlbrot\Router;
 
+use PHPUnit\Framework\TestCase;
 use POlbrot\Exceptions\InvalidJSONFileException;
 use POlbrot\Router\CustomRouteResolver;
-use PHPUnit\Framework\TestCase;
 use POlbrot\Router\Route;
 use POlbrot\Router\RouteResolverInterface;
 
@@ -97,3 +97,4 @@ class CustomRouteResolverTest extends TestCase
     }
 
 }
+
