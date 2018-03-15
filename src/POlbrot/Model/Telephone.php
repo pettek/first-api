@@ -8,7 +8,10 @@ namespace POlbrot\Model;
  */
 class Telephone implements \JsonSerializable
 {
+    /** @var string */
     private $type = '';
+
+    /** @var string */
     private $number = '';
 
     /**

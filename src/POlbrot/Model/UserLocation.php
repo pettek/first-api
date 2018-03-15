@@ -8,9 +8,16 @@ namespace POlbrot\Model;
  */
 class UserLocation implements \JsonSerializable
 {
+    /** @var string  */
     private $country = '';
+
+    /** @var string  */
     private $city = '';
+
+    /** @var string  */
     private $street = '';
+
+    /** @var string  */
     private $zipCode = '';
 
     /**

@@ -11,17 +11,20 @@ use POlbrot\Helpers\Helpers;
  */
 class UserBuilder
 {
-    /**
-     * @var User $user
-     */
+    /** @var User */
     private $user;
 
     /*
      * Properties: $firstNames, $lastNames, $locations contain some random data in an array from to choose
      * randomly from
      */
+    /** @var array */
     private $firstNames;
+
+    /** @var array */
     private $lastNames;
+
+    /** @var array */
     private $locations;
 
     /**

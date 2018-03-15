@@ -10,15 +10,34 @@ use \DateTime;
  */
 class User implements \JsonSerializable
 {
+    /** @var string */
     private $firstName = '';
+
+    /** @var string */
     private $lastName = '';
+
+    /** @var string */
     private $username = '';
+
+    /** @var string */
     private $password = '';
+
+    /** @var string */
     private $salt = '';
+
+    /** @var string */
     private $email = '';
+
+    /** @var string */
     private $gender = '';
+
+    /** @var UserLocation */
     private $location;
+
+    /** @var DateTime */
     private $dateOfBirth;
+
+    /** @var Telephone[]  */
     private $telephones = [];
 
 
