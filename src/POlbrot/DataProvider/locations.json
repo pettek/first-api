@@ -24,9 +24,39 @@
     "zipCode": "31-002"
   },
   {
+    "country": "US",
+    "city": "New York",
+    "street": "33rd Street",
+    "zipCode": "01290"
+  },
+  {
+    "country": "Russia",
+    "city": "Vladivostok",
+    "street": "Puszkina",
+    "zipCode": "782364"
+  },
+  {
+    "country": "Czech Republic",
+    "city": "Prague",
+    "street": "Zlatego Bazanta",
+    "zipCode": "48-100"
+  },
+  {
     "country": "Poland",
-    "city": "Łódź",
-    "street": "Piotrowska",
-    "zipCode": "38-200"
+    "city": "Warszawa",
+    "street": "Nowy Świat",
+    "zipCode": "01-002"
+  },
+  {
+    "country": "Poland",
+    "city": "Gdańsk",
+    "street": "Mickiewicza",
+    "zipCode": "56-721"
+  },
+  {
+    "country": "Poland",
+    "city": "Kraków",
+    "street": "Reymonta",
+    "zipCode": "31-223"
   }
 ]
