@@ -15,22 +15,26 @@ class UserController extends Controller
 {
     /**
      * Returns instance of JSONResponse with some fake user data as content
+     * Depends on data from files (via UserBuilderCreator::get) so it may throw exceptions indicating that data file
+     * cannot be read (does not exist or is not valid)
      *
      * @param Request $request
      *
      * @return JsonResponse
      * @throws \POlbrot\Exceptions\InvalidJSONPathException
      * @throws \POlbrot\Exceptions\InvalidTextFilePathException
-     * @throws \Exception
      */
     public function getAction(Request $request): JsonResponse
     {
-
         $users = [];
+
+        // Show one user if not specified in request attribute
         $howManyToGenerate = $request->attributes->get('number') ?? 1;
 
+        // Get instance of builder already filled with data from datafiles
         $builder = UserBuilderCreator::get();
 
+        // Fill $users array with some random data
         for ($i = 0; $i < $howManyToGenerate; $i++) {
             $user = $builder->getUser();
 
@@ -38,27 +42,5 @@ class UserController extends Controller
         }
 
         return new JsonResponse($users);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function findAction(Request $request): JsonResponse
-    {
-        $age = $request->attributes->get('age') ?? 'defaultAge';
-        $name = $request->attributes->get('name') ?? 'defaultName';
-
-        $user = [
-            'name' => [
-                'first' => $name,
-                'last' => 'Nazwisko',
-            ],
-            'location' => 'Wroclaw',
-            'age' => $age,
-        ];
-
-        return new JsonResponse($user);
     }
 }
