@@ -3,7 +3,8 @@
 namespace POlbrot\Model;
 
 /**
- * Class UserLocation
+ * Class represents a UserLocation
+ * It implements JsonSerializable method to show private properties in the API
  */
 class UserLocation implements \JsonSerializable
 {

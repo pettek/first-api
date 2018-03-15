@@ -5,7 +5,8 @@ namespace POlbrot\Model;
 use \DateTime;
 
 /**
- * Class User
+ * Class represents a User
+ * It implements JsonSerializable method to show private properties in the API
  */
 class User implements \JsonSerializable
 {

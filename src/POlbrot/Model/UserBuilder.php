@@ -15,6 +15,11 @@ class UserBuilder
      * @var User $user
      */
     private $user;
+
+    /*
+     * Properties: $firstNames, $lastNames, $passwords, $locations contain some random data in an array from to choose
+     * randomly from
+     */
     private $firstNames;
     private $lastNames;
     private $passwords;
@@ -158,6 +163,7 @@ class UserBuilder
     }
 
     /**
+     * Length: 22 was required by BCRYPT, not anymore, but left unchanged
      * @return $this
      */
     private function setRandomSalt(): self
@@ -192,8 +198,17 @@ class UserBuilder
      */
     private function setDateOfBirth(): self
     {
+        // Hard-coded boundaries
+        $minAge = 10;
+        $maxAge = 60;
+
         try {
-            $daysOld = random_int(10 * 365, 60 * 365);
+            $daysOld = random_int($minAge * 365, $maxAge * 365); // pick random number of days
+
+            /*
+             * DateTime constructor accepts strings formatted as '-100 days' that will return a DateTime 100 days before
+             * current timestamp
+             */
             $dob = new DateTime('-' . $daysOld . 'days');
 
             $this->user->setDateOfBirth($dob);
@@ -211,12 +226,21 @@ class UserBuilder
      */
     private function setTelephones(): self
     {
+        /*
+         * There are two hard-coded properties: private and work meaning the type of the telephone and also minimal
+         * and maximal length of the telephone number string
+         */
+
+        $minTelephoneLength = 8;
+        $maxTelephoneLength = 12;
+
         $private = (new Telephone())
             ->setType('private')
-            ->setNumber(Helpers::pickRandomAlphanumeric(8, 12, true));
+            ->setNumber(Helpers::pickRandomAlphanumeric($minTelephoneLength, $maxTelephoneLength, true));
+
         $work = (new Telephone())
             ->setType('work')
-            ->setNumber(Helpers::pickRandomAlphanumeric(8, 12, true));
+            ->setNumber(Helpers::pickRandomAlphanumeric($minTelephoneLength, $maxTelephoneLength, true));
 
         $this->user->addTelephone($private);
         $this->user->addTelephone($work);

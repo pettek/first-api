@@ -3,7 +3,8 @@
 namespace POlbrot\Model;
 
 /**
- * Class Telephone
+ * Class represents a Telephone
+ * It implements JsonSerializable method to show private properties in the API
  */
 class Telephone implements \JsonSerializable
 {
