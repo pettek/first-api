@@ -37,6 +37,14 @@ class Router implements RouterInterface
         $this->resolvers[$priority][] = $routeResolver;
         ksort($this->resolvers); // keep everything ordered by the key (priority)
 
+        /*
+         * Array of resolvers should be reversed, because indexes indicate priority and we want the resolvers with
+         * higher priority to execute first, we don't care if array would be re-indexed as long as it preserves the
+         * order i.e. array_reverse([2] => resolverOne [3] => resolverTwo)  =>  [0] => resolverTwo [1] => resolverOne
+         */
+
+        $this->resolvers = array_reverse($this->resolvers);
+
         return $this;
     }
 
@@ -53,14 +61,7 @@ class Router implements RouterInterface
          * @var RouteResolverInterface[] $sameLevelResolvers
          */
 
-        /*
-         * Array of resolvers should be reversed, because indexes indicate priority and we want the resolvers with
-         * higher priority to execute first, we don't care if array would be re-indexed as long as it preserves the
-         * order i.e. array_reverse([2] => resolverOne [3] => resolverTwo)  =>  [0] => resolverTwo [1] => resolverOne
-         */
-        $resolvers = array_reverse($this->resolvers);
-
-        foreach ($resolvers as $level => $sameLevelResolvers) {
+        foreach ($this->resolvers as $level => $sameLevelResolvers) {
             foreach ($sameLevelResolvers as $resolver) {
 
                 $uri = self::addSlashToURI($uri);
