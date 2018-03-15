@@ -13,6 +13,10 @@ use POlbrot\Exceptions\InvalidJSONPathException;
 class Helpers
 {
     /**
+     * Parse a JSON file from the path provided into an array
+     * If the path does not exist, throw an InvalidJSONPathException
+     * If it exists, but cannot be turned into an array, throw an InvalidJSONFileException
+     *
      * @param $pathToFile
      *
      * @return array
@@ -37,6 +41,8 @@ class Helpers
     }
 
     /**
+     * Accept an array and return one random element from it
+     *
      * @param $arr
      * @return mixed
      */
@@ -46,6 +52,11 @@ class Helpers
     }
 
     /**
+     * Construct a string of random length from the set of chars specified
+     * There are some default minimal and maximal lengths of the output string
+     * Third argument specifies if the set from where the characters are randomly picked contains only numbers (true),
+     * or numbers and letters (both upper- and lowercase) (DEFAULT, false)
+     *
      * @param int $minLength
      * @param int $maxLength
      * @param bool $onlyNumeric
@@ -69,12 +80,16 @@ class Helpers
 
             return $string;
         } catch (\Exception $e) {
+
             return '';
         }
 
     }
 
     /**
+     * Construct the username based on two strings: firstName and lastName. There are some hard-coded probabilities
+     * that specify how the username will be created
+     *
      * @param string $firstName
      * @param string $lastName
      * @return string
