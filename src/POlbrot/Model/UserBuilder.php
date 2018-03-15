@@ -108,7 +108,6 @@ class UserBuilder
 
     /**
      * @return $this
-     * @throws \Exception
      */
     private function setUsername(): self
     {
@@ -148,7 +147,6 @@ class UserBuilder
 
     /**
      * @return $this
-     * @throws \Exception
      */
     private function setRandomPassword(): self
     {
@@ -161,7 +159,6 @@ class UserBuilder
 
     /**
      * @return $this
-     * @throws \Exception
      */
     private function setRandomSalt(): self
     {
@@ -192,30 +189,34 @@ class UserBuilder
 
     /**
      * @return $this
-     * @throws \Exception
      */
     private function setDateOfBirth(): self
     {
-        $daysOld = random_int(10 * 365, 60 * 365);
-        $dob = new DateTime('-' . $daysOld . 'days');
+        try {
+            $daysOld = random_int(10 * 365, 60 * 365);
+            $dob = new DateTime('-' . $daysOld . 'days');
 
-        $this->user->setDateOfBirth($dob);
+            $this->user->setDateOfBirth($dob);
 
-        return $this;
+            return $this;
+        } catch (\Exception $e) {
+
+            return $this;
+        }
+
     }
 
     /**
      * @return $this
-     * @throws \Exception
      */
     private function setTelephones(): self
     {
         $private = (new Telephone())
             ->setType('private')
-            ->setNumber(Helpers::pickRandomAlphanumeric(8,12, true));
+            ->setNumber(Helpers::pickRandomAlphanumeric(8, 12, true));
         $work = (new Telephone())
             ->setType('work')
-            ->setNumber(Helpers::pickRandomAlphanumeric(8,12, true));
+            ->setNumber(Helpers::pickRandomAlphanumeric(8, 12, true));
 
         $this->user->addTelephone($private);
         $this->user->addTelephone($work);
@@ -225,7 +226,6 @@ class UserBuilder
 
     /**
      * @return User
-     * @throws \Exception
      */
     public function getUser(): User
     {
