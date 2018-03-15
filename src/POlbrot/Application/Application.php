@@ -20,6 +20,8 @@ class Application implements ApplicationInterface
 
     /**
      * Application constructor.
+     * Requires a Config object that contains some configuration info
+     * (Right now only the path to JSON containing custom routes)
      *
      * @param Config|null $config
      */
@@ -30,7 +32,8 @@ class Application implements ApplicationInterface
 
     /**
      * Accepts a Request and returns a Response, there will always be a Response, even if Request is somehow invalid or
-     * simply not handled by the application
+     * simply not handled by the application. May throw a InvalidArgumentException, because there is a Response created
+     * via constructor in catch block, if the status provided is incorrect.
      *
      * @param Request $request
      *
@@ -40,10 +43,13 @@ class Application implements ApplicationInterface
     public function handle(Request $request): Response
     {
         try {
-            // Fetch JSON from application config and resolve routes from them
+            // Fetch JSON from application config and resolve routes from it
             $routes = Helpers::jsonFileToArray($this->config::get('custom-routes'));
 
-            // Add some resolvers so the Router would work
+            /*
+             * Add some resolvers so the Router would work; higher priorities will be checked first, so the lower ones
+             * provide fallback
+             */
             $router = (new Router())
                 ->registerResolver(new DefaultRouteResolver(), 1)
                 ->registerResolver(new CustomRouteResolver($routes), 2);
@@ -74,17 +80,22 @@ class Application implements ApplicationInterface
             // If anything went wrong in meantime, return an error response
             $response = new Response($e, Response::HTTP_NOT_FOUND);
         }
+
+        // Add a header to enable Cross-Origin Resource Sharing
         return self::onBeforeSend($response);
 
     }
 
     /**
+     * Adds a proper header to enable Cross-Origin Resource Sharing
+     *
      * @param Response $response
      * @return Response
      */
     private static function onBeforeSend(Response $response): Response
     {
         $response->headers->set('Access-Control-Allow-Origin', '*');
+
         return $response;
     }
 }
