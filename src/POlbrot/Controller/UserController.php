@@ -56,20 +56,34 @@ class UserController extends Controller
      */
     public function createAction(Request $request): JsonResponse
     {
-        $user = new User();
-
+        $howManyUsersToAdd = 1;
+        $users = [];
         $builder = UserBuilderCreator::get();
-        $randomUser = $builder->getUser();
 
-        $user->setFirstName($randomUser->getFirstName());
-        $user->setLastName($randomUser->getLastName());
-        $user->setUsername($randomUser->getUsername());
-        $user->setPassword($randomUser->getPassword());
+        for($index = 0; $index < $howManyUsersToAdd; $index++) {
+            $users[] = $builder->getUser();
+        }
 
+        $startTime = microtime(true);
         $em = $this->application->getEntityManager();
-        $em->persist($user);
+
+        foreach($users as $randomUser) {
+            $user = new User();
+
+            $user->setFirstName($randomUser->getFirstName());
+            $user->setLastName($randomUser->getLastName());
+            $user->setUsername($randomUser->getUsername());
+            $user->setPassword($randomUser->getPassword());
+
+
+            $em->persist($user);
+        }
+
         $em->flush();
 
-        return new JsonResponse($user);
+        $endTime = microtime(true);
+        $timeElapsedInSeconds = ($endTime - $startTime);
+
+        return new JsonResponse(['time', $timeElapsedInSeconds]);
     }
 }
