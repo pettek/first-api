@@ -2,6 +2,7 @@
 
 namespace POlbrot\Controller;
 
+use POlbrot\Entity\User;
 use POlbrot\Model\UserBuilderCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,5 +43,33 @@ class UserController extends Controller
         }
 
         return new JsonResponse($users);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws \POlbrot\Exceptions\InvalidJSONPathException
+     * @throws \POlbrot\Exceptions\InvalidTextFilePathException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function createAction(Request $request): JsonResponse
+    {
+        $user = new User();
+
+        $builder = UserBuilderCreator::get();
+        $randomUser = $builder->getUser();
+
+        $user->setFirstName($randomUser->getFirstName());
+        $user->setLastName($randomUser->getLastName());
+        $user->setUsername($randomUser->getUsername());
+        $user->setPassword($randomUser->getPassword());
+
+        $em = $this->application->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return new JsonResponse($user);
     }
 }
