@@ -6,7 +6,7 @@ use POlbrot\Application\Application;
 
 /**
  * Class Controller
- * This is the place for methods and properties that will be shared by all the controllers in the future
+ * This is the place for methods and properties that will be shared by all the controllers
  *
  * @package POlbrot\Router
  */
@@ -16,15 +16,15 @@ class Controller
     protected $application;
 
     /**
-     * @return mixed
+     * @return Application|null
      */
-    public function getApplication()
+    public function getApplication(): ?Application
     {
         return $this->application;
     }
 
     /**
-     * @param mixed $application
+     * @param Application
      * @return Controller
      */
     public function setApplication($application): Controller
