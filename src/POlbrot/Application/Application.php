@@ -2,6 +2,8 @@
 
 namespace POlbrot\Application;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use POlbrot\Helpers\Helpers;
 use POlbrot\Router\CustomRouteResolver;
 use POlbrot\Router\DefaultRouteResolver;
@@ -19,16 +21,41 @@ class Application implements ApplicationInterface
     /** @var null|Config */
     private $config;
 
+    /** @var EntityManager */
+    private $entityManager;
+
     /**
      * Application constructor.
      * Requires a Config object that contains some configuration info
      * (Right now only the path to JSON containing custom routes)
      *
      * @param Config|null $config
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function __construct(Config $config)
+    public function __construct(Config $config = null)
     {
         $this->config = $config;
+        $this->entityManager = $this->entityManager ? $this->entityManager : $this->initEntityManager();
+    }
+
+    /**
+     * @return EntityManager
+     * @throws \Doctrine\ORM\ORMException
+     */
+    private function initEntityManager(): EntityManager
+    {
+        $isDevMode = true;
+        $path = dirname(__DIR__, 2);
+        $config = Setup::createAnnotationMetadataConfiguration([$path], $isDevMode);
+
+        // database configuration parameters
+        $conn = [
+            'driver' => 'pdo_sqlite',
+            'path' => dirname(__DIR__, 3) . '\\db.sqlite',
+        ];
+
+        // obtaining the entity manager
+        return EntityManager::create($conn, $config);
     }
 
     /**
@@ -60,7 +87,7 @@ class Application implements ApplicationInterface
 
             // Extract significant data from returned Route
             if ($route instanceof Route) {
-                $instance = $route->getController();
+                $instance = $route->getController()->setApplication($this);
                 $action = $route->getAction();
                 $params = $route->getParams();
 
@@ -98,5 +125,13 @@ class Application implements ApplicationInterface
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
         return $response;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager
+    {
+        return $this->entityManager;
     }
 }
