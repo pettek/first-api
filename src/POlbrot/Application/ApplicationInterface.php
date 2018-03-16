@@ -2,6 +2,7 @@
 
 namespace POlbrot\Application;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,4 +17,9 @@ interface ApplicationInterface
      * @return Response
      */
     public function handle(Request $request): Response;
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager;
 }
