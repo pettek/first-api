@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function createAction(Request $request): JsonResponse
     {
-        $howManyUsersToAdd = 1;
+        $howManyUsersToAdd = 1000;
         $users = [];
         $builder = UserBuilderCreator::get();
 
@@ -66,6 +66,7 @@ class UserController extends Controller
 
         $startTime = microtime(true);
         $em = $this->application->getEntityManager();
+        $em->beginTransaction();
 
         foreach($users as $randomUser) {
             $user = new User();
@@ -79,6 +80,7 @@ class UserController extends Controller
             $em->persist($user);
         }
 
+        $em->commit();
         $em->flush();
 
         $endTime = microtime(true);
