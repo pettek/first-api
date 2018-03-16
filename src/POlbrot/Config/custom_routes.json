@@ -1,4 +1,5 @@
 {
   "\/api\/user\/random\/{number}\/": "POlbrot\\Controller\\UserController::getAction",
-  "\/api\/user\/random\/": "POlbrot\\Controller\\UserController::getAction"
+  "\/api\/user\/random\/": "POlbrot\\Controller\\UserController::getAction",
+  "\/api\/user\/create\/random\/": "POlbrot\\Controller\\UserController::createAction"
 }
