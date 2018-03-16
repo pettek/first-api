@@ -35,7 +35,7 @@ class Application implements ApplicationInterface
     public function __construct(Config $config = null)
     {
         $this->config = $config;
-        $this->entityManager = $this->entityManager ? $this->entityManager : $this->initEntityManager();
+        $this->entityManager = $this->entityManager ?: $this->initEntityManager();
     }
 
     /**
